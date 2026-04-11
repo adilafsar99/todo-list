@@ -1,10 +1,7 @@
-import createBaseFields from './TaskListAndTaskFields.js'
-import createBaseMethods from './TaskListAndTaskMethods.js'
+import createTask from "./Task.js"
 
 
-
-
-const baseFields = createBaseFields('Play', 'high', '23-12-2026', false)
-const baseMethods = createBaseMethods(baseFields)
-console.log(baseFields)
-console.log(baseMethods.getTitle())
+const task = createTask('Play', 'Only creative games.', 'medium', '12/4/2026', false);
+const taskTwo = createTask('Play More', 'Only games.', 'low', '12/4/2027', true);
+console.log(task.getTitle())
+console.log(taskTwo.getTitle())
