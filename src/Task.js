@@ -1,5 +1,5 @@
-import createBaseFields from './TaskListAndTaskFields.js';
-import createBaseMethods from './TaskListAndTaskMethods.js';
+import { createTaskListAndTaskFields as createBaseFields } from './TaskListAndTask.js';
+import { createTaskListAndTaskMethods as createBaseMethods } from './TaskListAndTask.js';
 
 const createTask = (title, description, priority, deadline, isComplete) => {
     const baseFields = createBaseFields(title, priority, deadline, isComplete);
