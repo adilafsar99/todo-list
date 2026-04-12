@@ -1,28 +1,44 @@
-const createTaskListAndTaskFields = (title, priority, deadline, isComplete) => {
-    let id = crypto.randomUUID();
-    return {title, priority, deadline, isComplete, id};
-};
+const createTaskListAndTaskFields = (title, priority, deadline, isComplete) => ({
+    id: crypto.randomUUID(),
+    title, priority, deadline, isComplete,
+});
 
-const createTaskListAndTaskMethods = (fields) => {
-    const getTitle = () => fields.title;
+const createTaskListAndTaskMethods = (fields) => ({
+    get id () {
+        return fields.id;
+    },
+    
+    get title () {
+        return fields.title;
+    },
 
-    const setTitle = (newTitle) => fields.title = newTitle;
+    set title (newTitle) {
+        fields.title = newTitle;
+    },
 
-    const getPriority = () => fields.priority;
+    get priority () {
+        return fields.priority;
+    },
 
-    const setPriority = (newPriority) => fields.priority = newPriority;
+    set priority (newPriority) {
+        fields.priority = newPriority;
+    },
 
-    const getDeadline = () => fields.deadline;
+    get deadline () {
+        return fields.deadline;
+    },
 
-    const setDeadline = (newDeadline) => fields.priority = newDeadline;
+    set deadline (newDeadline) {
+        fields.priority = newDeadline;
+    },
 
-    const getIsComplete = () => fields.isComplete;
+    get isComplete () {
+        return fields.isComplete;
+    },
 
-    const toggleIsComplete = () => fields.isComplete = !fields.isComplete;
-
-    const getId = () => fields.id;
-
-    return {getTitle, setTitle, getPriority, setPriority, getDeadline, setDeadline, getIsComplete, toggleIsComplete, getId};
-};
+    toggleIsComplete() {
+        fields.isComplete = !fields.isComplete;
+    }
+});
 
 export {createTaskListAndTaskFields, createTaskListAndTaskMethods};

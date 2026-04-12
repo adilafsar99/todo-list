@@ -45,6 +45,6 @@ const createToDoAndTaskListMethods = (list) => {
     });
     
     return {getList, addItem, removeItem, getItem, updateItem, filterList, sortList};
-}
+};
 
 export {createToDoAndTaskListFields, createToDoAndTaskListMethods};
