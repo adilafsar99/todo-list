@@ -15,7 +15,9 @@ const createTaskListAndTaskMethods = (fields) => {
 
     const toggleIsComplete = () => fields.isComplete = !fields.isComplete;
 
-    return {getTitle, setTitle, getPriority, setPriority, getDeadline, setDeadline, getIsComplete, toggleIsComplete};
+    const getId = () => fields.id;
+
+    return {getTitle, setTitle, getPriority, setPriority, getDeadline, setDeadline, getIsComplete, toggleIsComplete, getId};
 };
 
 export default createTaskListAndTaskMethods;

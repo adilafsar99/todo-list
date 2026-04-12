@@ -6,7 +6,7 @@ const createTaskList = (title, priority, deadline, isComplete) => {
 
     const baseMethods = createBaseMethods(baseFields);
     
-    return {...baseFields, ...baseMethods};
+    return {...baseMethods};
 }
 
 export default createTaskList;
