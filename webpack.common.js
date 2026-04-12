@@ -2,7 +2,7 @@ import path from 'node:path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-    entry: './src/todo.js',
+    entry: './src/app.js',
     output: {
         filename: '[name].js',
         path: path.resolve(import.meta.dirname, 'dist'),

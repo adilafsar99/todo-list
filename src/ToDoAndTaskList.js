@@ -4,6 +4,8 @@ const createToDoAndTaskListFields = () => {
 };
 
 const createToDoAndTaskListMethods = (list) => {
+    const getList = () => list;
+
     const addItem = (item) => list.push(item);
 
     const removeItem = (id, list) => list = list.filter(item => item.id !== id);
@@ -42,7 +44,7 @@ const createToDoAndTaskListMethods = (list) => {
         }
     });
     
-    return {addItem, removeItem, getItem, updateItem, filterList, sortList};
+    return {getList, addItem, removeItem, getItem, updateItem, filterList, sortList};
 }
 
 export {createToDoAndTaskListFields, createToDoAndTaskListMethods};
