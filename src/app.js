@@ -1,2 +1,7 @@
-import ToDo from "./ToDo.js";
+import {renderHeader} from "./ToDo.js";
 
+const renderApp = () => {
+   renderHeader();
+}
+
+renderApp();

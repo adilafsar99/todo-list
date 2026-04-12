@@ -7,7 +7,7 @@ const createTaskList = (title, priority, deadline, isComplete) => {
     const listFields = createListFields();
 
     const baseMethods = createBaseMethods(baseFields);
-    const listMethods = createListMethods(listFields.list);
+    const listMethods = createListMethods(listFields);
     listMethods.createTask = (title, description, priority, deadline, isComplete) => {
         listMethods.addItem(Task(title, description, priority, deadline, isComplete));
     };

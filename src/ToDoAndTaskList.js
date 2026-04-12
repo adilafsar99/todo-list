@@ -1,9 +1,10 @@
 const createToDoAndTaskListFields = () => {
     let list = [];
-    return {list};
+    let activeItem = null;
+    return {list, activeItem};
 };
 
-const createToDoAndTaskListMethods = (list) => {
+const createToDoAndTaskListMethods = ({list, activeItem}) => {
     const getList = () => list;
 
     const addItem = (item) => list.push(item);
@@ -12,12 +13,26 @@ const createToDoAndTaskListMethods = (list) => {
 
     const getItem = (id) => list.find(item => item.id === id);
 
+    const getActiveItem = () => {
+        return activeItem;
+    };
+
+    const setActiveItem = (event) => {
+        if (!activeItem) {
+            activeItem = list[0];
+        }
+        else {
+            const targetId = event.target.dataset.id;
+            activeItem = getItem(targetId);
+        }
+    };
+
     const updateItem = (id, fields) => {
         const item = getItem(id, list);
         item.setTitle(fields.title);
         item.setPriority(fields.priority);
         item.setDeadline(fields.deadline);
-    }
+    };
 
     const formatDate = (date) => `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
 
@@ -32,7 +47,7 @@ const createToDoAndTaskListMethods = (list) => {
             case 'year':
                 return new Date(item.deadline).getFullYear() === new Date().getFullYear();
         }
-    })
+    });
 
     const getPriorityValue = (priority) => {
         switch (priority) {
@@ -43,7 +58,7 @@ const createToDoAndTaskListMethods = (list) => {
             case 'low':
                 return 1;
         }
-    }
+    };
 
     const sortList = (sortParam, order) => list.sort((a, b) => {
         if (order === 'descending') {
@@ -57,7 +72,7 @@ const createToDoAndTaskListMethods = (list) => {
         }
     });
     
-    return {getList, addItem, removeItem, getItem, updateItem, filterList, sortList};
+    return {getList, addItem, removeItem, getItem, getActiveItem, setActiveItem, updateItem, filterList, sortList};
 };
 
 export {createToDoAndTaskListFields, createToDoAndTaskListMethods};
