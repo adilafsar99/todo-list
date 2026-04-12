@@ -1,6 +1,6 @@
 import createTask from "./Task.js"
 import createTaskList from "./TaskList.js";
-import createToDoAndTaskListMethods from './ToDoAndTaskListMethods.js'
+import createToDoAndTaskListMethods from './ToDoAndTaskList.js'
 
 
 const task = createTask('Play', 'Only creative games.', 'medium', '12/4/2026', false)

@@ -1,3 +1,8 @@
+const createToDoAndTaskListFields = () => {
+    let list = [];
+    return {list};
+};
+
 const createToDoAndTaskListMethods = (list) => {
     const addItem = (item) => list.push(item);
 
@@ -39,3 +44,5 @@ const createToDoAndTaskListMethods = (list) => {
     
     return {addItem, removeItem, getItem, updateItem, filterList, sortList};
 }
+
+export {createToDoAndTaskListFields, createToDoAndTaskListMethods};
