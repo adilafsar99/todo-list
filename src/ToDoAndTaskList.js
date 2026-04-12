@@ -8,18 +8,31 @@ const createToDoAndTaskListMethods = (list) => {
 
     const addItem = (item) => list.push(item);
 
-    const removeItem = (id, list) => list = list.filter(item => item.id !== id);
+    const removeItem = (id) => list = list.filter(item => item.id !== id);
 
-    const getItem = (id, list) => list.find(item => item.id === id);
+    const getItem = (id) => list.find(item => item.id === id);
 
-    const updateItem = (id, list, fields) => {
-        const item = get(id, list);
+    const updateItem = (id, fields) => {
+        const item = getItem(id, list);
         item.setTitle(fields.title);
         item.setPriority(fields.priority);
         item.setDeadline(fields.deadline);
     }
 
-    const filterList = (paramType, paramValue, list) => list.filter(item => item[paramType] === paramValue);
+    const formatDate = (date) => `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
+
+    const filterList = (paramType, paramValue) => list.filter(item => {
+        switch (paramType) {
+            case 'day':
+                return new Date(item.deadline).toLocaleDateString('en-us', {weekday: 'short'}).toLowerCase() === paramValue; 
+            case 'date':
+                return formatDate(new Date(item.deadline)) == formatDate(new Date());
+            case 'month':
+                return new Date(item.deadline).getMonth() === new Date().getMonth();
+            case 'year':
+                return new Date(item.deadline).getFullYear() === new Date().getFullYear();
+        }
+    })
 
     const getPriorityValue = (priority) => {
         switch (priority) {
@@ -32,7 +45,7 @@ const createToDoAndTaskListMethods = (list) => {
         }
     }
 
-    const sortList = (sortParam, order, list) => list.sort((a, b) => {
+    const sortList = (sortParam, order) => list.sort((a, b) => {
         if (order === 'descending') {
             [a, b] = [b, a];
         }
