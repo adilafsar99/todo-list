@@ -1,4 +1,4 @@
-const attachAccessors = (todoItem) => {
+const attachTaskAccessors = (todoItem) => {
     Object.keys(todoItem).forEach(key => {
         let value = todoItem[key];
         Object.defineProperty(todoItem, key, {
@@ -9,4 +9,4 @@ const attachAccessors = (todoItem) => {
     })
 };
 
-export default attachAccessors;
+export default attachTaskAccessors;

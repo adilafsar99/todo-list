@@ -26,7 +26,17 @@ const createTodoAndTaskListMethods = () => {
         this.list = this.list.filter(item => item.id !== id);
     };
 
-    return { getItem, updateItem, removeItem };
+    const setActiveItem = function (id = '') {
+        if (!id) {
+            this.activeItem = this.list[0];
+        }
+        else {
+            const item = this.getItem(id);
+            this.activeItem = item;
+        }
+    };
+
+    return { getItem, updateItem, removeItem, setActiveItem };
 };
 
 const createTaskListMethods = () => {

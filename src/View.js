@@ -3,13 +3,17 @@ import recreateTodo from "./RecreateTodo.js";
 import { saveToStorage, getFromStorage } from "./LocalStorage.js";
 
 const todo = createTodo({});
+todo.createItem({title: 'Plain'})
+todo.setActiveItem()
 
 const renderActiveTaskList = (header) => {
     const container = document.createElement('div');
     container.classList.add('active-task-list-container');
     const activeTaskList = document.createElement('p');
     activeTaskList.classList.add('active-task-list-text');
-    activeTaskList.textContent = todo.activeItem.title;
+    if (todo.activeItem) {
+        activeTaskList.textContent = todo.activeItem.title;
+    }
     container.appendChild(activeTaskList);
     header.appendChild(container);
 };
