@@ -1,17 +1,50 @@
 import TaskList from "./TaskList.js";
-import { createToDoAndTaskListFields as createBaseFields , createToDoAndTaskListMethods as createBaseMethods } from './ToDoAndTaskList.js';
-import './ToDo.css';
+import './Todo.css';
 
-const ToDo = (() => {
-    const baseFields = createBaseFields();
-    
-    const baseMethods = createBaseMethods(baseFields);
-    baseMethods.createTaskList = (title, priority, deadline, isComplete) => {
-        baseMethods.addItem(TaskList(title, priority, deadline, isComplete));
-    };
+const Todo = class {
+    constructor(tasklistArray = [], activeItem) {
+        this.tasklistArray = tasklistArray;
+        this.activeItem = activeItem;
+    }
 
-    return {...baseMethods};
-})();
+    get tasklistArray() {
+        return this._tasklistArray;
+    }
+
+    set tasklistArray(newArray) {
+        this._tasklistArray = newArray;
+    }
+
+    getActiveItem = () => this.activeItem;
+
+    setActiveItem = (event) => {
+        if (!this.activeItem) {
+            this.activeItem = this._tasklistArray[0];
+        }
+        else {
+            const targetId = event.target.dataset.id;
+            this.activeItem = this.getTask(targetId);
+        }
+    }
+
+    createTasklist = (fields) => {
+        this.tasklist = new Tasklist(...fields);
+        this._tasklistArray.push(this.tasklist);
+        return this.tasklist;
+    }
+
+    deleteTasklist = (id) => this._tasklistArray = this._tasklistArray.filter(item => item._id !== id);
+
+    getTasklist = (id) => this._tasklistArray.find(item => item._id === id);
+
+    updateTasklist = (id, fields) => {
+        this.tasklist = this.getItem(id);
+        this.tasklist._title = fields.title;
+    }
+};
+
+const todo = new Todo();
+//console.log(todo.createTasklist())
 
 const renderActiveTaskListName = (header) => {
     const activeTaskList = document.createElement('div');
@@ -19,7 +52,7 @@ const renderActiveTaskListName = (header) => {
 
     const activeTaskListName = document.createElement('p');
     activeTaskListName.id = 'task-list-name';
-    const activeTaskListNameContent = ToDo.getList().length === 0 ? '' : ToDo.getActiveItem().title;
+    const activeTaskListNameContent = Todo.getList().length === 0 ? '' : Todo.getActiveItem().title;
     activeTaskListName.textContent = activeTaskListNameContent;
 
     activeTaskList.appendChild(activeTaskListName);
@@ -42,10 +75,12 @@ const renderHeader = () => {
     header.appendChild(title);
 }
 
+
+
 const renderTaskLists = (taskListsContainer) => {
     taskListsContainer.innerHTML = '';
 
-    ToDo.getList().forEach(item => {
+    Todo.getList().forEach(item => {
         const taskList = document.createElement('div');
         taskList.classList.add('task-list');
         taskList.dataset.id = item.id;
@@ -77,7 +112,7 @@ const renderTaskListsSection = (main) => {
     button.id = 'create-task-list-button';
     button.textContent = 'Create New Task List';
     button.addEventListener('click', (event) => {
-        ToDo.createTaskList('PLay', 'low', '2026-12-12', false);
+        Todo.createTaskList('PLay', 'low', '2026-12-12', false);
         renderTaskLists(taskListsContainer);
     })
 
@@ -99,4 +134,4 @@ const renderMain = () => {
     //renderTasksSection(main);
 }
 
-export {renderHeader, renderMain};
+export {Todo, renderHeader, renderMain};

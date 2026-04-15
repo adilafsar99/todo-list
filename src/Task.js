@@ -1,12 +1,11 @@
-import { createTaskListAndTaskFields as createBaseFields, createTaskListAndTaskMethods as createBaseMethods } from './TaskListAndTask.js';
+import {createTaskObject, attachTaskMethods} from './TaskListAndTask.js';
+import attachTaskAccessors from './Accessors.js';
 
-const createTask = (title, description, priority, deadline, isComplete) => {
-    const baseFields = createBaseFields(title, priority, deadline, isComplete);
-    baseFields.description = description;
-
-    const baseMethods = createBaseMethods(baseFields);
-
-    return {...baseMethods};
+const createTask = (state) => {
+    let task = createTaskObject(state);
+    attachTaskAccessors(task);
+    attachTaskMethods(task);
+    return task;
 };
 
 export default createTask;

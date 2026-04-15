@@ -1,44 +1,31 @@
-const createTaskListAndTaskFields = (title, priority, deadline, isComplete) => ({
-    id: crypto.randomUUID(),
-    title, priority, deadline, isComplete,
+const createTaskListAndTaskFields = ({title, id = null}) => ({
+    title,
+    id: !id ? crypto.randomUUID() : id,
 });
 
-const createTaskListAndTaskMethods = (fields) => ({
-    get id () {
-        return fields.id;
-    },
-    
-    get title () {
-        return fields.title;
-    },
-
-    set title (newTitle) {
-        fields.title = newTitle;
-    },
-
-    get priority () {
-        return fields.priority;
-    },
-
-    set priority (newPriority) {
-        fields.priority = newPriority;
-    },
-
-    get deadline () {
-        return fields.deadline;
-    },
-
-    set deadline (newDeadline) {
-        fields.priority = newDeadline;
-    },
-
-    get isComplete () {
-        return fields.isComplete;
-    },
-
-    toggleIsComplete() {
-        fields.isComplete = !fields.isComplete;
-    }
+const createTaskFields = ({description, priority, deadline, isComplete}) => ({
+    description,
+    priority,
+    deadline,
+    isComplete,
 });
 
-export {createTaskListAndTaskFields, createTaskListAndTaskMethods};
+const createTaskMethods = () => {
+    const toggleIsComplete = function () { 
+        this.isComplete = !this.isComplete;
+    };
+    return {toggleIsComplete};
+};
+
+const createTaskObject = (state) => {
+    const commonFields = createTaskListAndTaskFields(state);
+    const taskFields = createTaskFields(state);
+    return Object.assign({}, commonFields, taskFields);
+};
+
+const attachTaskMethods = (todoItem) => {
+    const taskMethods = createTaskMethods();
+    Object.assign(todoItem, taskMethods);
+};
+
+export {createTaskListAndTaskFields, createTaskObject, attachTaskMethods};

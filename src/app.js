@@ -1,8 +1,8 @@
-import {renderHeader, renderMain} from "./ToDo.js";
+import {renderHeader, renderMain} from "./Todo.js";
 
 const renderApp = () => {
    renderHeader();
    renderMain();
 }
 
-renderApp();
+//renderApp();
