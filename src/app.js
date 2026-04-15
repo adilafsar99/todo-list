@@ -1,8 +1,1 @@
-import {renderHeader, renderMain} from "./Todo.js";
-
-const renderApp = () => {
-   renderHeader();
-   renderMain();
-}
-
-//renderApp();
+import createTodo from './Todo.js';

@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { createTaskListAndTaskFields as createTaskListFields } from './TaskListAndTask.js';
 import createTask from './Task.js';
+import createTaskList from './TaskList.js';
 
 const createTodoAndTaskListFields = ({ list = [], activeItem = null }) => ({
     list,
@@ -113,7 +114,7 @@ const createTodoObject = (state) => {
 const attachTodoMethods = (todoObj) => {
     const commonMethods = createTodoAndTaskListMethods();
     const todoMethods = createTodoMethods();
-    Object.assign(taskListObj, commonMethods, todoMethods);
+    Object.assign(todoObj, commonMethods, todoMethods);
 };
 
 export { createTodoObject, createTaskListObject, attachTodoMethods, attachTaskListMethods };
