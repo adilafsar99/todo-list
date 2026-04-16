@@ -1,16 +1,10 @@
+:root {
+    --color-white: #ffffff;
+    --header-color: #3bb2c2;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em;
-}
-
-#title-text {
-    font-size: 2em;
 }

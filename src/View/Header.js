@@ -1,9 +1,11 @@
+import './Header.css';
+
 const renderActiveTaskList = (header, todo) => {
     const container = document.createElement('div');
     container.classList.add('active-task-list-container');
 
     const activeTaskList = document.createElement('p');
-    activeTaskList.classList.add('active-task-list-text');
+    activeTaskList.id = 'active-task-list-title';
     if (todo.activeItem) {
         activeTaskList.textContent = todo.activeItem.title;
     }
@@ -17,8 +19,8 @@ const renderAppName = (header) => {
     container.classList.add('app-name-container');
 
     const appName = document.createElement('p');
-    appName.classList.add('app-name');
-    appName.textContent = '_Todo_';
+    appName.id = 'app-name';
+    appName.textContent = '<Todo_App>';
     
     container.appendChild(appName);
     header.appendChild(container);
