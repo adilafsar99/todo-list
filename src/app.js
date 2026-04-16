@@ -1,3 +1,3 @@
-import renderApp from "./View.js";
+import renderApp from "./View/Todo.js";
 
 renderApp();
