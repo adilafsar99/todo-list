@@ -1,15 +1,15 @@
-const renderMain = (todo) => {
+const Main = (Header, todo) => {
     const main = document.querySelector('.main');
-    renderTaskListsSection(main, todo);
+    renderTaskListsSection(main, Header, todo);
     console.log('Main is rendering.')
 };
 
-const renderTaskListsSection = (main, todo) => {
+const renderTaskListsSection = (main, Header, todo) => {
     const section = document.createElement('div');
     section.classList.add('task-lists-section');
     
     renderSectionHeading(section);
-    renderCreateTaskListSection(section, todo);
+    renderCreateTaskListSection(section, Header, todo);
     
 
     main.appendChild(section);
@@ -23,17 +23,17 @@ const renderSectionHeading = (section) => {
     section.appendChild(sectionHeading);
 };
 
-const renderCreateTaskListSection = (section, todo) => {
+const renderCreateTaskListSection = (section, Header, todo) => {
     const createButton = document.createElement('button');
     createButton.id = 'create-button';
     createButton.textContent = 'Create Task List';
     
     section.appendChild(createButton);
 
-    createButton.onclick = () => renderTaskListForm(section, todo);
+    createButton.onclick = () => renderTaskListForm(section, Header, todo);
 };
 
-const renderTaskListForm = (section, todo) => {
+const renderTaskListForm = (section, Header, todo) => {
     const form = document.createElement('div');
     form.classList.add('task-list-form');
     
@@ -59,7 +59,7 @@ const renderTaskListForm = (section, todo) => {
         todo.createItem(inputObj);
         form.innerHTML = '';
         console.log(todo.list)
-        //renderTaskLists();
+        Header.updateActiveTaskList(todo);
     };
 
     inputRow.append(input, cancelButton);
@@ -67,4 +67,4 @@ const renderTaskListForm = (section, todo) => {
     section.append(form);
 };
 
-export default renderMain;
+export default Main;
