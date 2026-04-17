@@ -11,8 +11,9 @@ todo.createItem({title: 'Plain'})
 todo.setActiveItem()
 
 const renderApp = () => {
-    Header.render(todo);
-    Main(Header, todo);
+    const header = Header.create(todo);
+    console.log(Header)
+    document.body.append(header);
     console.log('The app is rendering')
 };
 

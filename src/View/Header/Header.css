@@ -8,12 +8,12 @@
     background-color: var(--header-color);
 }
 
-#active-task-list-title {
+#active-task-list {
     padding: 0.1em;
     transition: all 0.1s ease-in-out;
 }
 
-#active-task-list-title:hover {
+#active-task-list:hover {
     text-decoration: underline;
     color: var(--header-color);
     background-color: var(--color-white);
