@@ -1,7 +1,8 @@
 import createTodo from "../State/Todo.js";
 import recreateTodo from "../State/RecreateTodo.js";
 import { saveToStorage, getFromStorage } from "../State/LocalStorage.js";
-import renderHeader from "./Header.js";
+import Header from "./Header.js";
+import renderMain from "./Main.js";
 
 import './Todo.css';
 
@@ -10,7 +11,8 @@ todo.createItem({title: 'Plain'})
 todo.setActiveItem()
 
 const renderApp = () => {
-    renderHeader(todo);
+    Header.render(todo);
+    renderMain(todo);
     console.log('The app is rendering')
 };
 
