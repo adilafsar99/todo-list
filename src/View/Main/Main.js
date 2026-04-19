@@ -1,8 +1,19 @@
-const Main = (Header, todo) => {
-    const main = document.querySelector('.main');
-    renderTaskListsSection(main, Header, todo);
-    console.log('Main is rendering.')
-};
+import TaskListsSection from './TaskListsSection/TaskListsSection.js';
+
+const Main = (() => {
+    const create = (todo) => {
+        const root = document.createElement('main');
+        root.classList.add('main');
+        
+        const taskListsSection = TaskListsSection.create(todo);
+        
+        root.append(taskListsSection);
+
+        return root;
+    };
+
+    return {create};
+})();
 
 const renderTaskListsSection = (main, Header, todo) => {
     const section = document.createElement('div');
