@@ -7,8 +7,8 @@ import Main from "./Main/Main.js";
 import './Todo.css';
 
 const todo = createTodo({});
-todo.createItem({title: 'Plain'})
-todo.setActiveItem()
+// todo.createItem({title: 'Plain'})
+// todo.setActiveItem()
 
 const renderApp = () => {
     const header = Header.create(todo);
