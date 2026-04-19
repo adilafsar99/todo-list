@@ -25,7 +25,16 @@ const TaskLists = (() => {
         input.classList.add('task-list-input');
         input.value = taskList.title;
         input.maxLength = 20;
-        input.disabled = true;
+        input.readOnly = true;
+
+        input.onclick = (event) => {
+            if (input.readOnly) {
+                const id = event.target.closest('.task-list').dataset.id;
+                const activeItem = todo.setActiveItem(id);
+                Header.ActiveTaskList.update(activeItem);
+            }
+        };
+
         input.oninput = () => {
             if (!input.value) {
                 button.innerHTML = xIcon.outerHTML;
@@ -34,20 +43,19 @@ const TaskLists = (() => {
             else {
                 button.innerHTML = checkIcon.outerHTML;
                 button.onclick = (event) => {
-                    input.disabled = true;
                     const id = event.target.closest('.task-list').dataset.id;
-                    const state = {title: input.value};
+                    const state = { title: input.value };
                     updateTitle(todo, id, state);
+                    input.readOnly = true;
+                    button.innerHTML = editIcon.outerHTML;
+                    button.onclick = () => enableInput(input, button, checkIcon);
                 };
             }
         };
 
         const button = document.createElement('button');
         button.classList.add('task-list-button');
-        button.onclick = () => {
-            input.disabled = false;
-            button.innerHTML = checkIcon.outerHTML;
-        };
+        button.onclick = () => enableInput(input, button, checkIcon);
 
         const xIcon = document.createElement('i');
         xIcon.classList.add('fa-solid', 'fa-x');
@@ -65,6 +73,10 @@ const TaskLists = (() => {
         return form;
     };
 
+    const enableInput = (input, button, checkIcon) => {
+        input.readOnly = false;
+        button.innerHTML = checkIcon.outerHTML;
+    };
 
     const update = (todo) => {
         const root = document.querySelector('.task-lists-root');

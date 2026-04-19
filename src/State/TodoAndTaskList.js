@@ -34,6 +34,7 @@ const createTodoAndTaskListMethods = () => {
         else {
             const item = this.getItem(id);
             this.activeItem = item;
+            return item;
         }
     };
 
