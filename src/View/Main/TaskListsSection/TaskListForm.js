@@ -1,3 +1,5 @@
+import Header from '../../Header/Header.js'; 
+
 const TaskListForm = (() => {
     const create = (createTaskListFormButton, todo) => {
         const root = document.createElement('div');
@@ -42,6 +44,7 @@ const TaskListForm = (() => {
         const taskList = todo.createItem(inputObj);
         console.log(taskList)
         todo.setActiveItem(taskList.id);
+        Header.ActiveTaskList.update(todo.activeItem);
         input.value = '';
         button.textContent = 'x';
         button.onclick = () => cancel(root, createTaskListFormButton, input);

@@ -15,9 +15,9 @@ const ActiveTaskList = (() => {
         return root;
     };
 
-    const update = (todo) => {
-        const activeTaskList = document.querySelector('active-task-list');
-        activeTaskList.textContent = todo.activeItem.title;
+    const update = (activeItem) => {
+        const activeTaskList = document.querySelector('#active-task-list');
+        activeTaskList.textContent = activeItem.title;
     };
 
     return {create, update};
