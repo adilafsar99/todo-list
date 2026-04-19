@@ -14,12 +14,13 @@ const createTodoAndTaskListMethods = () => {
     };
     
     const updateItem = function (id, state) {
-        const task = this.getItem(id);
+        const item = this.getItem(id);
         for (let key in state) {
             if (state[key]) {
-                task[key] = state[key];
+                item[key] = state[key];
             }
         }
+        return item;
     };
     
     const removeItem = function (id) {

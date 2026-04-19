@@ -16,15 +16,15 @@ const TaskListForm = (() => {
         input.classList.add('task-list-input');
         input.placeholder = 'Title';
         input.maxLength = 20;
-        input.required;
+        input.required = true;
         input.oninput = () => {
             if (!input.value) {
-                button.onclick = () => cancel(root, createTaskListFormButton, input);
                 button.innerHTML = xIcon.outerHTML;
+                button.onclick = () => cancel(root, createTaskListFormButton, input);             
             }
             else {
-                button.onclick = () => createTaskList(root, createTaskListFormButton, input, todo, button, xIcon);
                 button.innerHTML = checkIcon.outerHTML;
+                button.onclick = () => createTaskList(root, createTaskListFormButton, input, todo, button, xIcon);
             };
         };
 
@@ -49,9 +49,8 @@ const TaskListForm = (() => {
     const createTaskList = (root, createTaskListFormButton, input, todo, button, xIcon) => {
         root.classList.toggle('hidden');
         createTaskListFormButton.classList.toggle('hidden');
-        const inputObj = { title: input.value };
-        const taskList = todo.createItem(inputObj);
-        console.log(taskList)
+        const state = { title: input.value };
+        const taskList = todo.createItem(state);
         todo.setActiveItem(taskList.id);
         Header.ActiveTaskList.update(todo.activeItem);
         TaskLists.update(todo);
