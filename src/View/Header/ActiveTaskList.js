@@ -11,16 +11,16 @@ const ActiveTaskList = (() => {
         }
 
         root.appendChild(activeTaskList);
-        
+
         return root;
     };
 
     const update = (activeItem) => {
         const activeTaskList = document.querySelector('#active-task-list');
-        activeTaskList.textContent = activeItem.title;
+        activeTaskList.textContent = activeItem ? activeItem.title : '';
     };
 
-    return {create, update};
+    return { create, update };
 })();
 
 export default ActiveTaskList;

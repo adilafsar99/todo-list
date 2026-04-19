@@ -23,39 +23,54 @@ const TaskLists = (() => {
 
         const input = document.createElement('input');
         input.classList.add('task-list-input');
+        input.name = 'title-input';
         input.value = taskList.title;
         input.maxLength = 20;
         input.readOnly = true;
-
+        
+        // Change active task list
         input.onclick = (event) => {
             if (input.readOnly) {
                 const id = event.target.closest('.task-list').dataset.id;
+                if (todo.activeItem.id === id) {
+                    return;
+                }
                 const activeItem = todo.setActiveItem(id);
                 Header.ActiveTaskList.update(activeItem);
             }
         };
-
+        
+        // Change the editButton icon based on the value of the title input
         input.oninput = () => {
             if (!input.value) {
-                button.innerHTML = xIcon.outerHTML;
-                button.onclick = '';
+                editButton.innerHTML = xIcon.outerHTML;
+                editButton.onclick = '';
             }
             else {
-                button.innerHTML = checkIcon.outerHTML;
-                button.onclick = (event) => {
+                editButton.innerHTML = checkIcon.outerHTML;
+                editButton.onclick = (event) => {
                     const id = event.target.closest('.task-list').dataset.id;
                     const state = { title: input.value };
-                    updateTitle(todo, id, state);
+                    updateTaskList(todo, id, state);
                     input.readOnly = true;
-                    button.innerHTML = editIcon.outerHTML;
-                    button.onclick = () => enableInput(input, button, checkIcon);
+                    editButton.innerHTML = editIcon.outerHTML;
+                    editButton.onclick = () => enableInput(input, editButton, checkIcon);
                 };
             }
         };
 
-        const button = document.createElement('button');
-        button.classList.add('task-list-button');
-        button.onclick = () => enableInput(input, button, checkIcon);
+        const editButton = document.createElement('button');
+        editButton.classList.add('task-list-button');
+        editButton.id = 'edit-button';
+        editButton.onclick = () => enableInput(input, editButton, checkIcon);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('task-list-button');
+        deleteButton.id = 'delete-button';
+        deleteButton.onclick = (event) => {
+            const id = event.target.closest('.task-list').dataset.id;
+            deleteTaskList(todo, id);   
+        };
 
         const xIcon = document.createElement('i');
         xIcon.classList.add('fa-solid', 'fa-x');
@@ -66,16 +81,20 @@ const TaskLists = (() => {
         const editIcon = document.createElement('i');
         editIcon.classList.add('fa-solid', 'fa-pen-to-square');
 
-        button.appendChild(editIcon);
-        inputRow.append(input, button);
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fa-solid', 'fa-trash');
+
+        editButton.appendChild(editIcon);
+        deleteButton.appendChild(deleteIcon);
+        inputRow.append(input, editButton, deleteButton);
         form.append(inputRow);
 
         return form;
     };
 
-    const enableInput = (input, button, checkIcon) => {
+    const enableInput = (input, editButton, checkIcon) => {
         input.readOnly = false;
-        button.innerHTML = checkIcon.outerHTML;
+        editButton.innerHTML = checkIcon.outerHTML;
     };
 
     const update = (todo) => {
@@ -88,11 +107,21 @@ const TaskLists = (() => {
         });
     };
 
-    const updateTitle = (todo, id, state) => {
+    const updateTaskList = (todo, id, state) => {
         const taskList = todo.updateItem(id, state);
         if (todo.activeItem.id === taskList.id) {
             Header.ActiveTaskList.update(todo.activeItem);
         }
+    };
+
+    const deleteTaskList = (todo, id) => {
+        const activeItem = todo.activeItem;
+        const taskList = todo.removeItem(id);
+        TaskLists.update(todo);
+        if (activeItem === taskList) {
+            todo.setActiveItem();
+        }
+        Header.ActiveTaskList.update(todo.activeItem);
     };
 
     return { create, update };

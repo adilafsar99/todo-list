@@ -14,6 +14,7 @@ const TaskListForm = (() => {
 
         const input = document.createElement('input');
         input.classList.add('task-list-input');
+        input.name = 'title-input';
         input.placeholder = 'Title';
         input.maxLength = 20;
         input.required = true;
