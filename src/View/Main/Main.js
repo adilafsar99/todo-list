@@ -1,3 +1,5 @@
+import './Main.css';
+
 import TaskListsSection from './TaskListsSection/TaskListsSection.js';
 
 const Main = (() => {
