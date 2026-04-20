@@ -1,5 +1,5 @@
 .main {
     height: 90vh;
     display: grid;
-    grid-template-columns: 20% 1fr 20%;
+    grid-template-columns: 20% 1fr;
 }

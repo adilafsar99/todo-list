@@ -110,7 +110,7 @@ const TaskLists = (() => {
     const updateTaskList = (todo, id, state) => {
         const taskList = todo.updateItem(id, state);
         if (todo.activeItem.id === taskList.id) {
-            Header.ActiveTaskList.update(todo.activeItem);
+            Header.ActiveList.update(todo);
         }
     };
 
@@ -121,7 +121,7 @@ const TaskLists = (() => {
         if (activeItem === taskList) {
             todo.setActiveItem();
         }
-        Header.ActiveTaskList.update(todo.activeItem);
+        Header.ActiveList.update(todo);
     };
 
     return { create, update };

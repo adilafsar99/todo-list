@@ -53,7 +53,7 @@ const TaskListForm = (() => {
         const state = { title: input.value };
         const taskList = todo.createItem(state);
         todo.setActiveItem(taskList.id);
-        Header.ActiveTaskList.update(todo.activeItem);
+        Header.ActiveList.update(todo);
         TaskLists.update(todo);
         input.value = '';
         button.innerHTML = xIcon.outerHTML;

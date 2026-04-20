@@ -1,5 +1,5 @@
 import './Header.css';
-import ActiveTaskList from './ActiveTaskList.js';
+import ActiveList from './ActiveList.js';
 import AppName from './AppName.js';
 
 const Header = (() => {
@@ -7,15 +7,15 @@ const Header = (() => {
         const root = document.createElement('header');
         root.classList.add('header');
 
-        const activeTaskList = ActiveTaskList.create(todo);
+        const activeList = ActiveList.create(todo);
         const appName = AppName.create();
 
-        root.append(activeTaskList, appName);
+        root.append(activeList, appName);
 
         return root;
     };
 
-    return { create, ActiveTaskList };
+    return { create, ActiveList };
 })();
 
 export default Header;
