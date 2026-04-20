@@ -1,9 +1,5 @@
 .main {
-    max-height: 100%;
+    height: 90vh;
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-}
-
-.task-list-section-root {
-    grid-column: 1 / 1;
+    grid-template-columns: 20% 1fr 20%;
 }

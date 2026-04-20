@@ -1,3 +1,72 @@
 .hidden {
     display: none;
 }
+
+.task-lists-section-root {
+    grid-column: 1 / 1;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 0.5em;
+    color: var(--color-white);
+    background-color: var(--task-lists-color);
+    padding: 0.5em;
+}
+
+#task-lists-heading {
+    font-size: 1.5em;
+}
+
+#create-task-list-form-button {
+    width: 100%;
+    padding: 0.3em;
+    font-size: 1em;
+    font-weight: bold;
+    color: inherit;
+    background-color: var(--header-color);
+    border-color: var(--color-white);
+    border-radius: 5px;
+}
+
+.task-list-form-root {
+    padding-top: 0.5em;
+}
+
+.task-list-input-row {
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+.task-list-input {
+    height: 100%;
+    padding: 0.2em;
+    color: var(--header-color);
+}
+
+.task-list-input:read-only {
+    color: var(--color-white);
+    background-color: var(--header-color);
+    border-color: var(--color-white);
+    cursor: pointer;
+}
+
+.task-list-button {
+    height: 100%;
+    padding: 0.2em;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.task-list-button:hover {
+    color: var(--color-white);
+    background-color: var(--hover-color);
+}
+
+.task-lists-root {
+    padding-top: 0.5em;
+    border-top: 5px dotted var(--header-color);
+}
+
+.task-list {
+    margin-bottom: 0.5em;
+}

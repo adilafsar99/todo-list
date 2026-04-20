@@ -1,6 +1,8 @@
 :root {
     --color-white: #ffffff;
+    --hover-color: #22979b;
     --header-color: #3bb2c2;
+    --task-lists-color: #7ccfeb;
 }
 
 * {
@@ -11,4 +13,21 @@
 
 body {
     height: 100vh;
+}
+
+button, input {
+    font-size: inherit;
+    font-style: inherit;
+    box-sizing: inherit;
+    border: none;
+}
+
+button {
+    cursor: pointer;
+    color: var(--color-white);
+    background-color: var(--header-color);
+}
+
+input {
+    width: 100%;
 }

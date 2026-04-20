@@ -4,7 +4,7 @@ import TaskLists from './TaskLists.js';
 const TaskListForm = (() => {
     const create = (createTaskListFormButton, todo) => {
         const root = document.createElement('div');
-        root.classList.add('task-list-root', 'hidden');
+        root.classList.add('task-list-form-root', 'hidden');
 
         const form = document.createElement('div');
         form.classList.add('task-list');
