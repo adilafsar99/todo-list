@@ -6,14 +6,14 @@ const CreateTaskListForm = (() => {
         root.classList.add('create-task-list-form-root');
 
         const button = document.createElement('button');
-        const taskListForm = TaskListForm.create(button, todo);
-
         button.id = 'create-task-list-form-button';
         button.textContent = 'New Task List';
         button.onclick = () => {
             button.classList.toggle('hidden');
             taskListForm.classList.toggle('hidden');
         };
+
+        const taskListForm = TaskListForm.create(button, todo);
         
         root.append(button, taskListForm);
 

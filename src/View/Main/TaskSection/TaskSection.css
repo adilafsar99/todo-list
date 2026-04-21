@@ -1,8 +1,32 @@
+.hidden {
+    display: none;
+}
+
 .task-section-root {
     grid-column: 2;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 0.5em;
+    color: var(--color-white);
+    background-color: var(--task-lists-color);
     padding: 0.5em;
 }
 
 #task-heading {
     font-size: 1.5em;
+}
+
+#create-task-form-button {
+    width: 100%;
+    padding: 0.3em;
+    font-size: 1em;
+    font-weight: bold;
+    color: inherit;
+    background-color: var(--header-color);
+    border-color: var(--color-white);
+    border-radius: 5px;
+}
+
+.task-form {
+    
 }
