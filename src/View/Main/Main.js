@@ -1,15 +1,17 @@
 import './Main.css';
 
-import TaskListsSection from './TaskListsSection/TaskListsSection.js';
+import TaskListSection from './TaskListSection/TaskListSection.js';
+import TaskSection from './TaskSection/TaskSection.js';
 
 const Main = (() => {
     const create = (todo) => {
         const root = document.createElement('main');
         root.classList.add('main');
         
-        const taskListsSection = TaskListsSection.create(todo);
+        const taskListSection = TaskListSection.create(todo);
+        const taskSection = TaskSection.create(todo);
         
-        root.append(taskListsSection);
+        root.append(taskListSection, taskSection);
 
         return root;
     };

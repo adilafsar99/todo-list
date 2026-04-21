@@ -2,7 +2,7 @@
     display: none;
 }
 
-.task-lists-section-root {
+.task-list-section-root {
     grid-column: 1 / 1;
     display: flex;
     flex-flow: column nowrap;
@@ -12,7 +12,7 @@
     padding: 0.5em;
 }
 
-#task-lists-heading {
+#task-list-heading {
     font-size: 1.5em;
 }
 

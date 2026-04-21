@@ -1,0 +1,8 @@
+.task-section-root {
+    grid-column: 2;
+    padding: 0.5em;
+}
+
+#task-heading {
+    font-size: 1.5em;
+}

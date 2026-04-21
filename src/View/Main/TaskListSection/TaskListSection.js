@@ -1,17 +1,17 @@
-import './TaskListsSection.css';
+import './TaskListSection.css';
 
 import Heading from './Heading.js';
 import CreateTaskListForm from './CreateTaskListForm.js';
-import TaskLists from './TaskLists.js';
+import TaskList from './TaskList.js';
 
-const TaskListsSection = (() => {
+const TaskListSection = (() => {
     const create = (todo) => {
         const root = document.createElement('div');
-        root.classList.add('task-lists-section-root');
+        root.classList.add('task-list-section-root');
 
         const heading = Heading.create();
         const createTaskListForm = CreateTaskListForm.create(todo);
-        const taskLists = TaskLists.create(todo);
+        const taskLists = TaskList.create(todo);
 
         root.append(heading, createTaskListForm, taskLists);
 
@@ -21,4 +21,4 @@ const TaskListsSection = (() => {
     return {create};
 })();
 
-export default TaskListsSection;
+export default TaskListSection;
