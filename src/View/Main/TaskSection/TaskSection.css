@@ -41,8 +41,45 @@
 }
 
 .task-form {
-    width: min(80%, 400px);
+    width: max-content;
     height: 50vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border: 2px solid var(--task-lists-color);
+    border-radius: 5px;
+    background-color: var(--hover-color);
+}
 
-    border: 2px solid var(--header-color);
+.form-row {
+    width: 100%;
+}
+
+.multi-input-row {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 1em;
+}
+
+#priority-input {
+    flex-basis: 1
+}
+
+#deadline-input {
+    flex-basis: 1
+}
+
+.task-input {
+    width: 100%;
+}
+
+#description-input {
+    resize: none;
+}
+
+#create-task-button {
+    width: 100%;
+    padding: 0.5em;
 }

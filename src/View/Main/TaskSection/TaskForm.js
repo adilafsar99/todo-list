@@ -14,9 +14,13 @@ const TaskForm = (() => {
         titleLabel.textContent = 'Title';
 
         const titleInput = document.createElement('input');
+        titleInput.classList.add('task-input');
         titleInput.id = 'title-input';
         titleInput.maxLength = 12;
         titleInput.required = true;
+
+        const multiInputRow = document.createElement('div');
+        multiInputRow.classList.add('multi-input-row');
 
         const priorityRow = document.createElement('div');
         priorityRow.classList.add('form-row');
@@ -26,6 +30,7 @@ const TaskForm = (() => {
         priorityLabel.textContent = 'Priority';
 
         const priorityInput = document.createElement('select');
+        priorityInput.classList.add('task-input');
         priorityInput.id = 'priority-input';
         priorityInput.required = true;
         
@@ -52,6 +57,7 @@ const TaskForm = (() => {
 
         const deadlineInput = document.createElement('input');
         deadlineInput.type = 'date';
+        deadlineInput.classList.add('task-input');
         deadlineInput.id = 'deadline-input';
         deadlineInput.required = true;
         
@@ -63,6 +69,7 @@ const TaskForm = (() => {
         descriptionLabel.textContent = 'Description';
 
         const descriptionInput = document.createElement('textarea');
+        descriptionInput.classList.add('task-input');
         descriptionInput.id = 'description-input';
         descriptionInput.rows = 5;
         descriptionInput.maxLength = 50;
@@ -76,6 +83,7 @@ const TaskForm = (() => {
         taskListLabel.textContent = 'Task List';
 
         const taskListInput = document.createElement('select');
+        taskListInput.classList.add('task-input');
         taskListInput.id = 'task-list-input';
         
         todo.list.forEach(taskList => {
@@ -101,7 +109,9 @@ const TaskForm = (() => {
         descriptionRow.append(descriptionLabel, descriptionInput);
         taskListRow.append(taskListLabel, taskListInput);
 
-        form.append(titleRow, priorityRow, deadlineRow, descriptionRow, taskListRow, button);
+        multiInputRow.append(priorityRow, deadlineRow);
+
+        form.append(titleRow, multiInputRow, descriptionRow, taskListRow, button);
         
         root.append(form)
 
