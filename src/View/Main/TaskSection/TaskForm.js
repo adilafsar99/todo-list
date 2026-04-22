@@ -129,7 +129,18 @@ const TaskForm = (() => {
         console.log(task)
     };
 
-    return { create };
+    const fillFields = (task) => {
+        const taskForm = document.querySelector('.task-form');
+        const [title, priority, deadline, description, taskList, button] = Array.from(taskForm.elements);
+        console.log(title, priority, deadline, description, taskList, button)
+        title.value = task.title;
+        priority.value = task.priority;
+        deadline.value = task.deadline;
+        description.value = task.description
+        
+    };
+
+    return { create, fillFields, toggleVisibility };
 })();
 
 export default TaskForm;

@@ -8,7 +8,7 @@ const CreateTaskForm = (() => {
         const button = document.createElement('button');
         button.id = 'create-task-form-button';
         button.textContent = 'New Task';
-        button.onclick = () => showTaskForm(taskForm);
+        button.onclick = () => TaskForm.toggleVisibility();
 
         const taskForm = TaskForm.create(todo);
 
@@ -16,10 +16,6 @@ const CreateTaskForm = (() => {
 
         return root;
     };
-
-    const showTaskForm = (taskForm) => {
-        taskForm.classList.toggle('hidden');
-    }
 
     return { create };
 })();
