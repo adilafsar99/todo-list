@@ -4,7 +4,7 @@ const TaskForm = (() => {
         root.classList.add('task-form-root');
 
         const form = document.createElement('form');
-        form.classList.add('task-form', 'hidden');
+        form.classList.add('task-form');
         
         const titleRow = document.createElement('div');
         titleRow.classList.add('form-row', 'title-row');
@@ -42,7 +42,6 @@ const TaskForm = (() => {
         priorityHigh.value = 'high';
         
         priorityInput.append(priorityLow, priorityMedium, priorityHigh);
-        console.log(priorityInput)
 
         const deadlineRow = document.createElement('div');
         deadlineRow.classList.add('form-row');
@@ -93,7 +92,6 @@ const TaskForm = (() => {
             event.preventDefault();
             toggleVisibility();
             createTask(todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
-            console.log(todo.activeItem);
             clearFields();
         };
 
@@ -104,13 +102,19 @@ const TaskForm = (() => {
         taskListRow.append(taskListLabel, taskListInput);
 
         form.append(titleRow, priorityRow, deadlineRow, descriptionRow, taskListRow, button);
+        
+        root.append(form)
 
-        return form;
+        return root;
     };
 
     const toggleVisibility = () => {
-        const taskForm = document.querySelector('.task-form');
-        taskForm.classList.toggle('hidden');
+        const taskFormRoot = document.querySelector('.task-form-root');
+        if (taskFormRoot.style.display === 'flex') {
+            taskFormRoot.style.display = 'none';
+        } else {
+            taskFormRoot.style.display = 'flex';
+        }
     };
 
     const clearFields = () => {
@@ -125,8 +129,7 @@ const TaskForm = (() => {
         const description = descriptionInput.value;
         const taskList = todo.getItem(taskListInput.value);
 
-        const task = taskList.createItem({title, priority, deadline, description, taskList});
-        console.log(task)
+        taskList.createItem({title, priority, deadline, description, taskList});
     };
 
     const fillFields = (task) => {
@@ -137,7 +140,7 @@ const TaskForm = (() => {
         priority.value = task.priority;
         deadline.value = task.deadline;
         description.value = task.description
-        
+        taskList.value = task.taskList;
     };
 
     return { create, fillFields, toggleVisibility };
