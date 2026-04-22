@@ -2,6 +2,7 @@ import './TaskSection.css';
 
 import Heading from './Heading.js';
 import CreateTaskForm from './CreateTaskForm.js';
+import Tasks from './Tasks.js';
 
 const TaskSection = (() => {
     const create = (todo) => {
@@ -10,8 +11,9 @@ const TaskSection = (() => {
 
         const heading = Heading.create();
         const createTaskForm = CreateTaskForm.create(todo);
+        const tasks = Tasks.create(todo);
 
-        root.append(heading, createTaskForm);
+        root.append(heading, createTaskForm, tasks);
 
         return root;
     };

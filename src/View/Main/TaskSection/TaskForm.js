@@ -1,3 +1,5 @@
+import Tasks from './Tasks.js';
+
 const TaskForm = (() => {
     const create = (todo) => {
         const root = document.createElement('div');
@@ -101,6 +103,7 @@ const TaskForm = (() => {
             toggleVisibility();
             createTask(todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
             clearFields();
+            Tasks.update(todo.activeItem.list);
         };
 
         titleRow.append(titleLabel, titleInput);
