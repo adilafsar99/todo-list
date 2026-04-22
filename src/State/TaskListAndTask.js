@@ -3,7 +3,7 @@ const createTaskListAndTaskFields = ({title, id = null}) => ({
     id: !id ? crypto.randomUUID() : id,
 });
 
-const createTaskFields = ({description, priority, deadline, isComplete}) => ({
+const createTaskFields = ({description, priority, deadline, isComplete = false}) => ({
     description,
     priority,
     deadline,
