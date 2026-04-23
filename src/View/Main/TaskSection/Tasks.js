@@ -1,3 +1,5 @@
+import {format} from 'date-fns';
+
 const Tasks = (() => {
     const create = (taskList) => {
         const root = document.createElement('div');
@@ -33,25 +35,34 @@ const Tasks = (() => {
         const openCardText = document.createElement('div');
         openCardText.classList.add('open-card-text');
 
+        const taskListRow = document.createElement('div');
+        taskListRow.classList.add('task-list-row');
+
+        const taskRow = document.createElement('div');
+        taskRow.classList.add('task-row');
+
+        const taskListTitle = document.createElement('p');
+        taskListTitle.id = 'task-list-title';
+        taskListTitle.textContent = taskList.title;
+
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
         taskTitle.textContent = task.title;
         
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
-        taskDeadline.textContent = task.deadline;
+        taskDeadline.textContent = format(task.deadline, 'dd-m-yyyy');
 
         const taskDescription = document.createElement('p');
         taskDescription.id = 'task-description';
         taskDescription.textContent = task.description;
-
-        const taskListTitle = document.createElement('p');
-        taskListTitle.id = 'task-list';
-        taskListTitle.textContent = taskList.title;
         
         checkboxCol.appendChild(checkbox);
 
-        closedCardText.append(taskTitle, taskDeadline, taskListTitle);
+        taskListRow.appendChild(taskListTitle);
+        taskRow.append(taskTitle, taskDeadline);
+
+        closedCardText.append(taskListRow, taskRow);
         openCardText.appendChild(taskDescription);
 
         textCol.append(closedCardText, openCardText)
