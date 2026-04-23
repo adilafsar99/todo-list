@@ -15,8 +15,9 @@ const Tasks = (() => {
 
     const createTaskCard = (task, taskList) => {
         const taskCard = document.createElement('div');
-        taskCard.classList.add('task-card');
+        taskCard.classList.add('task-card', 'closed-card');
         taskCard.dataset.id = task.id;
+        taskCard.onclick = (event) => openTaskCard(event);
         
         const checkboxCol = document.createElement('div');
         checkboxCol.classList.add('task-col', 'checkbox-col');
@@ -51,7 +52,7 @@ const Tasks = (() => {
         
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
-        taskDeadline.textContent = format(task.deadline, 'dd-m-yyyy');
+        taskDeadline.textContent = format(task.deadline, 'dd-mm-yyyy');
 
         const taskDescription = document.createElement('p');
         taskDescription.id = 'task-description';
@@ -71,6 +72,15 @@ const Tasks = (() => {
 
         return taskCard;
     };
+
+    const openTaskCard = (event) => {
+        const target = event.target.closest('.task-card');
+        const taskCards = document.querySelectorAll('.task-card');
+        taskCards.forEach(taskCard => {
+            taskCard.classList.add('closed-card');
+        });
+        target.classList.remove('closed-card');
+    }
 
     const update = (taskList) => {
         const root = document.querySelector('.tasks-root');

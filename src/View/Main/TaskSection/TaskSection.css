@@ -90,17 +90,33 @@
     column-gap: 0.5em;
     padding: 0.5em;
     margin-bottom: 0.5em;
+    
 
     border: 2px solid var(--hover-color);
     border-radius: 5px;
     background-color: var(--header-color);
 }
 
+.closed-card {
+    height: 60px;
+    overflow: hidden;
+}
+
+
 .task-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.closed-card .task-row {
+    margin-bottom: 0.5em;
 }
 
 #task-title {
     font-size: 1.5em;
+}
+
+#task-deadline {
+    align-self: self-end;
 }
