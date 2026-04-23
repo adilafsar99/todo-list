@@ -103,7 +103,7 @@ const TaskForm = (() => {
             toggleVisibility();
             createTask(todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
             clearFields();
-            Tasks.update(todo.activeItem.list);
+            Tasks.update(todo.activeItem);
         };
 
         titleRow.append(titleLabel, titleInput);
