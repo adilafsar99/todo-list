@@ -53,7 +53,7 @@ const Tasks = (() => {
         
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
-        taskDeadline.textContent = format(task.deadline, 'dd-mm-yyyy');
+        taskDeadline.textContent = format(task.deadline, 'dd-MMM-yyyy');
 
         const taskDescription = document.createElement('p');
         taskDescription.id = 'task-description';
@@ -92,7 +92,6 @@ const Tasks = (() => {
     const update = (taskList) => {
         const root = document.querySelector('.tasks-root');
         root.innerHTML = '';
-        console.log(taskList)
 
         taskList.list.forEach(task => {
             let taskCard = createTaskCard(task, taskList);
