@@ -15,11 +15,23 @@ const Tasks = (() => {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card');
         taskCard.dataset.id = task.id;
+        
+        const checkboxCol = document.createElement('div');
+        checkboxCol.classList.add('task-col', 'checkbox-col');
 
-        const checkMark = document.createElement('input');
-        checkMark.type = 'checkbox';
-        checkMark.id = 'task-check-mark';
-        checkMark.onchange = (event) => markComplete(event, taskList);
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'task-check-mark';
+        checkbox.onchange = (event) => markComplete(event, taskList);
+
+        const textCol = document.createElement('div');
+        textCol.classList.add('task-col', 'text-col');
+        
+        const closedCardText = document.createElement('div');
+        closedCardText.classList.add('closed-card-text');
+
+        const openCardText = document.createElement('div');
+        openCardText.classList.add('open-card-text');
 
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
@@ -28,8 +40,23 @@ const Tasks = (() => {
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
         taskDeadline.textContent = task.deadline;
+
+        const taskDescription = document.createElement('p');
+        taskDescription.id = 'task-description';
+        taskDescription.textContent = task.description;
+
+        const taskListTitle = document.createElement('p');
+        taskListTitle.id = 'task-list';
+        taskListTitle.textContent = taskList.title;
         
-        taskCard.append(checkMark, taskTitle, taskDeadline);
+        checkboxCol.appendChild(checkbox);
+
+        closedCardText.append(taskTitle, taskDeadline, taskListTitle);
+        openCardText.appendChild(taskDescription);
+
+        textCol.append(closedCardText, openCardText)
+        
+        taskCard.append(checkboxCol, textCol);
 
         return taskCard;
     };
@@ -48,7 +75,6 @@ const Tasks = (() => {
     const markComplete = (event, taskList) => {
         const id = event.target.closest('.task-card').dataset.id;
         const task = taskList.getItem(id);
-        console.log(task)
         task.toggleIsComplete();
     };
 
