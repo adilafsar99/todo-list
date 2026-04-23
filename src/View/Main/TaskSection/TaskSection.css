@@ -97,20 +97,10 @@
     background-color: var(--header-color);
 }
 
-.closed-card {
-    height: 60px;
-    overflow: hidden;
-}
-
-
 .task-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.closed-card .task-row {
-    margin-bottom: 0.5em;
 }
 
 #task-title {

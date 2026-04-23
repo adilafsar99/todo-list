@@ -15,27 +15,27 @@ const Tasks = (() => {
 
     const createTaskCard = (task, taskList) => {
         const taskCard = document.createElement('div');
-        taskCard.classList.add('task-card', 'closed-card');
+        taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = taskList.id;
         taskCard.dataset.taskId = task.id;
         taskCard.onclick = (event) => openTaskCard(event);
         
         const checkboxCol = document.createElement('div');
-        checkboxCol.classList.add('task-col', 'checkbox-col');
+        checkboxCol.classList.add('checkbox-col');
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = 'task-check-mark';
         checkbox.onchange = (event) => markComplete(event, taskList);
 
-        const textCol = document.createElement('div');
-        textCol.classList.add('task-col', 'text-col');
+        const contentCol = document.createElement('div');
+        contentCol.classList.add('content-col');
         
-        const closedCardText = document.createElement('div');
-        closedCardText.classList.add('closed-card-text');
+        const closedCardContent = document.createElement('div');
+        closedCardContent.classList.add('closed-card-content');
 
-        const openCardText = document.createElement('div');
-        openCardText.classList.add('open-card-text');
+        const openCardContent = document.createElement('div');
+        openCardContent.classList.add('open-card-content', 'hidden');
 
         const taskListRow = document.createElement('div');
         taskListRow.classList.add('task-list-row');
@@ -64,12 +64,12 @@ const Tasks = (() => {
         taskListRow.appendChild(taskListTitle);
         taskRow.append(taskTitle, taskDeadline);
 
-        closedCardText.append(taskListRow, taskRow);
-        openCardText.appendChild(taskDescription);
+        closedCardContent.append(taskListRow, taskRow);
+        openCardContent.appendChild(taskDescription);
 
-        textCol.append(closedCardText, openCardText)
+        contentCol.append(closedCardContent, openCardContent);
         
-        taskCard.append(checkboxCol, textCol);
+        taskCard.append(checkboxCol, contentCol);
 
         return taskCard;
     };
@@ -77,10 +77,16 @@ const Tasks = (() => {
     const openTaskCard = (event) => {
         const target = event.target.closest('.task-card');
         const taskCards = document.querySelectorAll('.task-card');
-        taskCards.forEach(taskCard => {
-            taskCard.classList.add('closed-card');
-        });
-        target.classList.remove('closed-card');
+        const targetOpenCardCol = target.children[1].lastChild;
+        if (!targetOpenCardCol.classList.contains('hidden')) {
+            targetOpenCardCol.classList.add('hidden');
+            console.log('hi')
+        } else {
+            taskCards.forEach(taskCard => {
+                taskCard.children[1].lastChild.classList.add('hidden');
+            });
+            targetOpenCardCol.classList.remove('hidden');
+        }
     }
 
     const update = (taskList) => {
