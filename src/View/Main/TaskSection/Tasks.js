@@ -16,7 +16,8 @@ const Tasks = (() => {
     const createTaskCard = (task, taskList) => {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card', 'closed-card');
-        taskCard.dataset.id = task.id;
+        taskCard.dataset.taskListId = taskList.id;
+        taskCard.dataset.taskId = task.id;
         taskCard.onclick = (event) => openTaskCard(event);
         
         const checkboxCol = document.createElement('div');
