@@ -110,3 +110,7 @@
 #task-deadline {
     align-self: self-end;
 }
+
+.button-row {
+    text-align: right;
+}

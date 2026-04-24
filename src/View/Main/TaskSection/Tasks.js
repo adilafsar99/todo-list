@@ -1,5 +1,7 @@
 import {format} from 'date-fns';
 
+import TaskForm from './TaskForm.js';
+
 const Tasks = (() => {
     const create = (taskList) => {
         const root = document.createElement('div');
@@ -43,6 +45,9 @@ const Tasks = (() => {
         const taskRow = document.createElement('div');
         taskRow.classList.add('task-row');
 
+        const buttonRow = document.createElement('div');
+        buttonRow.classList.add('button-row');
+
         const taskListTitle = document.createElement('p');
         taskListTitle.id = 'task-list-title';
         taskListTitle.textContent = taskList.title;
@@ -58,14 +63,24 @@ const Tasks = (() => {
         const taskDescription = document.createElement('p');
         taskDescription.id = 'task-description';
         taskDescription.textContent = task.description;
+
+        const button = document.createElement('button');
+        button.id = 'edit-task-button';
+        button.onclick = (event) => editTask(event, taskList);
+
+        const icon = document.createElement('i');
+        icon.classList.add('fas', 'fa-pen-to-square');
+
+        button.appendChild(icon);
         
         checkboxCol.appendChild(checkbox);
 
         taskListRow.appendChild(taskListTitle);
         taskRow.append(taskTitle, taskDeadline);
+        buttonRow.appendChild(button);
 
         closedCardContent.append(taskListRow, taskRow);
-        openCardContent.appendChild(taskDescription);
+        openCardContent.append(taskDescription, buttonRow);
 
         contentCol.append(closedCardContent, openCardContent);
         
@@ -80,14 +95,26 @@ const Tasks = (() => {
         const targetOpenCardCol = target.children[1].lastChild;
         if (!targetOpenCardCol.classList.contains('hidden')) {
             targetOpenCardCol.classList.add('hidden');
-            console.log('hi')
         } else {
             taskCards.forEach(taskCard => {
                 taskCard.children[1].lastChild.classList.add('hidden');
             });
             targetOpenCardCol.classList.remove('hidden');
         }
-    }
+    };
+
+    const editTask = (event, taskList) => {
+        const taskId = event.target.closest('.task-card').dataset.taskId;
+        const task = taskList.getItem(taskId);
+        TaskForm.fillFields(task);
+        TaskForm.toggleVisibility();
+    };
+
+    const markComplete = (event, taskList) => {
+        const taskId = event.target.closest('.task-card').dataset.taskId;
+        const task = taskList.getItem(taskId);
+        task.toggleIsComplete();
+    };
 
     const update = (taskList) => {
         const root = document.querySelector('.tasks-root');
@@ -97,12 +124,6 @@ const Tasks = (() => {
             let taskCard = createTaskCard(task, taskList);
             root.appendChild(taskCard);
         });
-    };
-
-    const markComplete = (event, taskList) => {
-        const id = event.target.closest('.task-card').dataset.id;
-        const task = taskList.getItem(id);
-        task.toggleIsComplete();
     };
 
     return { create, update };
