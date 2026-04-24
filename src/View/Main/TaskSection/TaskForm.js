@@ -146,7 +146,7 @@ const TaskForm = (() => {
         taskList.createItem({title, priority, deadline, description, taskList});
     };
 
-    const fillFields = (task) => {
+    const fillFields = (task, todo) => {
         const taskForm = document.querySelector('.task-form');
         const [title, priority, deadline, description, taskList, button] = Array.from(taskForm.elements);
         console.log(title, priority, deadline, description, taskList, button)
@@ -163,7 +163,7 @@ const TaskForm = (() => {
         });
 
         button.textContent = 'Update';
-        button.onclick = () => updateTask()
+        button.onclick = () => updateTask(todo);
         
     };
 

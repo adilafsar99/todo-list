@@ -27,7 +27,7 @@ const Tasks = (() => {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.id = 'task-check-mark';
+        checkbox.id = 'task-check-box';
         checkbox.onchange = (event) => markComplete(event, taskList);
 
         const contentCol = document.createElement('div');
@@ -90,6 +90,9 @@ const Tasks = (() => {
     };
 
     const openTaskCard = (event) => {
+        if (event.target.type === 'checkbox') {
+            return;
+        };
         const target = event.target.closest('.task-card');
         const taskCards = document.querySelectorAll('.task-card');
         const targetOpenCardCol = target.children[1].lastChild;
