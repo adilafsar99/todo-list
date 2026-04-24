@@ -11,7 +11,7 @@ const TaskSection = (() => {
 
         const heading = Heading.create();
         const createTaskForm = CreateTaskForm.create(todo);
-        const tasks = Tasks.create(todo.activeItem);
+        const tasks = Tasks.create(todo);
 
         root.append(heading, createTaskForm, tasks);
 
