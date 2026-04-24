@@ -89,6 +89,7 @@ const TaskForm = (() => {
         taskListInput.id = 'task-list-input';
         
         todo.list.forEach(taskList => {
+            console.log(taskList)
             const taskListOption = document.createElement('option');
             taskListOption.textContent = taskList.title;
             taskListOption.value = taskList.id;
@@ -153,7 +154,17 @@ const TaskForm = (() => {
         priority.value = task.priority;
         deadline.value = task.deadline;
         description.value = task.description
-        taskList.value = task.taskList;
+        
+        const taskListOptions = Array.from(taskList.options);
+        taskListOptions.forEach(option => {
+            if (option.id === task.taskList) {
+                option.defaultSelected = true;
+            }
+        });
+
+        button.textContent = 'Update';
+        button.onclick = () => updateTask()
+        
     };
 
     return { create, fillFields, toggleVisibility };

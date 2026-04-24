@@ -35,8 +35,8 @@ const TaskLists = (() => {
                 if (todo.activeItem.id === id) {
                     return;
                 }
-                const activeItem = todo.setActiveItem(id);
-                Header.ActiveTaskList.update(activeItem);
+                todo.setActiveItem(id);
+                Header.ActiveList.update(todo);
             }
         };
         
