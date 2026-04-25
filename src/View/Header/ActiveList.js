@@ -1,3 +1,5 @@
+import Observer from './../../Observer/Observer.js';
+
 const ActiveList = (() => {
     const create = (todo) => {
         const root = document.createElement('div');
@@ -21,5 +23,7 @@ const ActiveList = (() => {
 
     return { create, update };
 })();
+
+Observer.subscribe(ActiveList.update);
 
 export default ActiveList;

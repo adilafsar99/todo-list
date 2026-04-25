@@ -1,5 +1,6 @@
 import {format} from 'date-fns';
 
+import Observer from './../../../Observer/Observer.js';
 import TaskForm from './TaskForm.js';
 
 const Tasks = (() => {
@@ -131,5 +132,7 @@ const Tasks = (() => {
 
     return { create, update };
 })();
+
+Observer.subscribe(Tasks.update);
 
 export default Tasks;

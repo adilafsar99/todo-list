@@ -5,8 +5,8 @@ const attachTaskAccessors = (todoItem) => {
             get: () => value,
             set: (newValue) => value = newValue,
             enumerable: true,
-        })
-    })
+        });
+    });
 };
 
 export default attachTaskAccessors;

@@ -7,16 +7,16 @@ const Main = (() => {
     const create = (todo) => {
         const root = document.createElement('main');
         root.classList.add('main');
-        
+
         const taskListSection = TaskListSection.create(todo);
         const taskSection = TaskSection.create(todo);
-        
+
         root.append(taskListSection, taskSection);
 
         return root;
     };
 
-    return {create};
+    return { create };
 })();
 
 export default Main;

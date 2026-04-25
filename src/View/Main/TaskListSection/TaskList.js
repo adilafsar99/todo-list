@@ -1,4 +1,4 @@
-import Header from '../../Header/Header.js';
+import Observer from './../../../Observer/Observer.js';
 
 const TaskLists = (() => {
     const create = (todo) => {
@@ -36,7 +36,7 @@ const TaskLists = (() => {
                     return;
                 }
                 todo.setActiveItem(id);
-                Header.ActiveList.update(todo);
+                Observer.notify(todo);
             }
         };
         
@@ -110,21 +110,22 @@ const TaskLists = (() => {
     const updateTaskList = (todo, id, state) => {
         const taskList = todo.updateItem(id, state);
         if (todo.activeItem.id === taskList.id) {
-            Header.ActiveList.update(todo);
+            Observer.notify(todo);
         }
     };
 
     const deleteTaskList = (todo, id) => {
         const activeItem = todo.activeItem;
         const taskList = todo.removeItem(id);
-        TaskLists.update(todo);
         if (activeItem === taskList) {
             todo.setActiveItem();
         }
-        Header.ActiveList.update(todo);
+        Observer.notify(todo);
     };
 
     return { create, update };
 })();
+
+Observer.subscribe(TaskLists.update);
 
 export default TaskLists;

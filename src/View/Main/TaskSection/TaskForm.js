@@ -1,4 +1,4 @@
-import Tasks from './Tasks.js';
+import Observer from './../../../Observer/Observer.js';
 
 const TaskForm = (() => {
     const create = (todo) => {
@@ -104,7 +104,7 @@ const TaskForm = (() => {
             toggleVisibility();
             createTask(todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
             clearFields();
-            Tasks.update(todo);
+            Observer.notify(todo);
         };
 
         titleRow.append(titleLabel, titleInput);
@@ -183,7 +183,7 @@ const TaskForm = (() => {
             toggleVisibility();
             updateTask(taskId, todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
             clearFields();
-            Tasks.update(todo);
+            Observer.notify(todo);
         };
 
     };

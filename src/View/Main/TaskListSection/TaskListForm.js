@@ -1,5 +1,4 @@
-import Header from '../../Header/Header.js';
-import TaskLists from './TaskList.js';
+import Observer from './../../../Observer/Observer.js';
 
 const TaskListForm = (() => {
     const create = (createTaskListFormButton, todo) => {
@@ -53,8 +52,7 @@ const TaskListForm = (() => {
         const state = { title: input.value };
         const taskList = todo.createItem(state);
         todo.setActiveItem(taskList.id);
-        Header.ActiveList.update(todo);
-        TaskLists.update(todo);
+        Observer.notify(todo);
         input.value = '';
         button.innerHTML = xIcon.outerHTML;
         button.onclick = () => cancel(root, createTaskListFormButton, input);
