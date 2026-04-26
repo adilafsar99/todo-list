@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
-import Observer from '../../../Subject/Subject.js';
-import todo from '../../../State/Todo.js';
+import todo from '../../../State/State.js';
+import Subject from '../../../Subject/Subject.js';
 
 import TaskForm from './TaskForm.js';
 
@@ -141,6 +141,6 @@ const Tasks = (() => {
     return { create, update };
 })();
 
-Observer.subscribe(Tasks.update);
+Subject.subscribe(Tasks.update);
 
 export default Tasks;

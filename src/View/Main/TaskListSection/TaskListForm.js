@@ -1,5 +1,5 @@
-import todo from './../../../State/Todo.js';
-import Observer from '../../../Subject/Subject.js';
+import todo from './../../../State/State.js';
+import Subject from '../../../Subject/Subject.js';
 
 const TaskListForm = (() => {
     const create = (createTaskListFormButton) => {
@@ -53,7 +53,7 @@ const TaskListForm = (() => {
         const state = { title: input.value };
         const taskList = todo.createItem(state);
         todo.setActiveItem(taskList.id);
-        Observer.notify(todo);
+        Subject.notify(todo);
         input.value = '';
         button.innerHTML = xIcon.outerHTML;
         button.onclick = () => cancel(root, createTaskListFormButton, input);

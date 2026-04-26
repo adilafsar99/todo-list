@@ -8,6 +8,4 @@ const createTodo = (state) => {
     return todo;
 };
 
-const Todo = createTodo({});
-
-export default Todo;
+export default createTodo;

@@ -1,5 +1,5 @@
+import todo from './../../State/State.js';
 import Subject from '../../Subject/Subject.js';
-import todo from './../../State/Todo.js';
 
 const ActiveList = (() => {
     const create = () => {
@@ -9,7 +9,7 @@ const ActiveList = (() => {
         const activeList = document.createElement('p');
         activeList.id = 'active-list';
 
-        const activeListTitle = todo.activeItem ? todo.activeItem.title : 'No Active Tasklist';
+        const activeListTitle = todo.activeItem.title;
 
         activeList.textContent = activeListTitle;
 
@@ -21,9 +21,9 @@ const ActiveList = (() => {
     const update = () => {
         const activeList = document.querySelector('#active-list');
 
-        const activeListTitle = todo.activeItem ? todo.activeItem.title : 'No Active Tasklist';
+        const activeListTitle = todo.activeItem.title;
         
-        activeList.textContent = activeListTitle || 'No Active Tasklist';
+        activeList.textContent = activeListTitle;
     };
 
     return { create, update };

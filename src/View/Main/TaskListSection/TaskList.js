@@ -1,5 +1,5 @@
+import todo from './../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
-import todo from './../../../State/Todo.js';
 
 const TaskLists = (() => {
     const create = () => {
@@ -80,7 +80,13 @@ const TaskLists = (() => {
 
         editButton.appendChild(editIcon);
         deleteButton.appendChild(deleteIcon);
-        inputRow.append(input, editButton, deleteButton);
+
+        if (taskList.title === 'General') {
+            inputRow.appendChild(input);
+        } else {
+            inputRow.append(input, editButton, deleteButton);
+        }
+        
         form.append(inputRow);
 
         return form;
