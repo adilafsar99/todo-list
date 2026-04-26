@@ -25,6 +25,7 @@ const Tasks = (() => {
         taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = todo.activeItem.id;
         taskCard.dataset.taskId = task.id;
+        console.log(taskCard.dataset.taskId)
         taskCard.onclick = (event) => openTaskCard(event);
 
         const checkboxCol = document.createElement('div');

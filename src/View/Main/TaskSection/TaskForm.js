@@ -99,13 +99,7 @@ const TaskForm = (() => {
         const button = document.createElement('button');
         button.id = 'create-task-button';
         button.textContent = 'Create';
-        button.onclick = (event) => {
-            event.preventDefault();
-            toggleVisibility();
-            createTask(titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
-            clearFields();
-            Subject.notify(todo);
-        };
+        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
 
         titleRow.append(titleLabel, titleInput);
         priorityRow.append(priorityLabel, priorityInput);
@@ -136,7 +130,10 @@ const TaskForm = (() => {
         taskForm.reset()
     };
 
-    const createTask = (titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
+    const createTask = (event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
+        event.preventDefault();
+        toggleVisibility();
+
         const title = titleInput.value;
         const priority = priorityInput.value;
         const deadline = deadlineInput.value;
@@ -144,17 +141,31 @@ const TaskForm = (() => {
         const taskList = todo.getItem(taskListInput.value);
 
         taskList.createItem({ title, priority, deadline, description, taskList });
+
+        clearFields();
+        Subject.notify(todo);
     };
 
-    const updateTask = (taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
+    const updateTask = (event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput, button) => {
+        console.log('Update')
+        event.preventDefault();
+        toggleVisibility();
+        taskListInput.classList.remove('hidden');
+        button.textContent = 'Create';
+        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+
         const title = titleInput.value;
         const priority = priorityInput.value;
         const deadline = deadlineInput.value;
         const description = descriptionInput.value;
+        const taskListId = taskListInput.value;
 
         const taskList = todo.getItem(taskListInput.value);
 
-        taskList.updateItem(taskId, { title, priority, deadline, description, taskList });
+        taskList.updateItem(taskId, { title, priority, deadline, description, taskListId });
+
+        clearFields();
+        Subject.notify(todo);
     };
 
     const fillFields = (taskId, task) => {
@@ -170,28 +181,26 @@ const TaskForm = (() => {
         deadlineInput.value = task.deadline;
         descriptionInput.value = task.description
 
-        const taskListOptions = Array.from(taskListInput.options);
-        taskListOptions.forEach(option => {
-            if (option.id === task.taskList) {
-                option.defaultSelected = true;
-            }
-        });
+        taskListInput.classList.add('hidden');
 
         button.textContent = 'Update';
-        button.onclick = (event) => {
-            event.preventDefault();
-            toggleVisibility();
-            updateTask(taskId, todo, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
-            clearFields();
-            Observer.notify(todo);
-        };
+        button.onclick = (event) => updateTask(event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput, button);
     };
 
     const update = () => {
         const taskListInput = document.querySelector('#task-list-input');
+        taskListInput.innerHTML = '';
+        todo.list.forEach(taskList => {
+            const taskListOption = document.createElement('option');
+            taskListOption.textContent = taskList.title;
+            taskListOption.value = taskList.id;
+            taskListInput.appendChild(taskListOption);
+        });
     };
 
-    return { create, fillFields, toggleVisibility };
+    return { create, update, fillFields, toggleVisibility };
 })();
+
+Subject.subscribe(TaskForm.update);
 
 export default TaskForm;
