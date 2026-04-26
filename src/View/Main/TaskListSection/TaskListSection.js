@@ -7,7 +7,7 @@ import TaskList from './TaskList.js';
 const TaskListSection = (() => {
     const create = () => {
         const root = document.createElement('div');
-        root.classList.add('task-list-section-root');
+        root.classList.add('task-list-section-root', 'sidebar');
 
         const heading = Heading.create();
         const createTaskListForm = CreateTaskListForm.create();

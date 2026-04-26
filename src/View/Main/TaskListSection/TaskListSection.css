@@ -3,7 +3,6 @@
 }
 
 .task-list-section-root {
-    grid-column: 1 / 1;
     display: flex;
     flex-flow: column nowrap;
     row-gap: 0.5em;
