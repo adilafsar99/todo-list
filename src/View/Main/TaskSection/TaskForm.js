@@ -9,7 +9,7 @@ const TaskForm = (() => {
             if (!event.target.classList.contains('task-form-root')) {
                 return;
             }
-            clearFields();
+            resetForm();
             toggleVisibility();
         };
 
@@ -132,9 +132,22 @@ const TaskForm = (() => {
         }
     };
 
-    const clearFields = () => {
+    const resetForm = () => {
         const taskForm = document.querySelector('.task-form');
-        taskForm.reset()
+        const [titleInput,
+            priorityInput,
+            deadlineInput,
+            descriptionInput,
+            taskListInput,
+            button] = getFields(taskForm);
+        const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
+
+        taskListLabel.classList.remove('hidden');
+        taskListInput.classList.remove('hidden');
+        button.textContent = 'Create';
+        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+
+        taskForm.reset();
     };
 
     const createTask = (event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
@@ -149,17 +162,13 @@ const TaskForm = (() => {
 
         taskList.createItem({ title, priority, deadline, description, taskList });
 
-        clearFields();
+        resetForm();
         Subject.notify(todo);
     };
 
-    const updateTask = (event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput, button) => {
-        console.log('Update')
+    const updateTask = (event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListLabel, taskListInput, button) => {
         event.preventDefault();
         toggleVisibility();
-        taskListInput.classList.remove('hidden');
-        button.textContent = 'Create';
-        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
 
         const title = titleInput.value;
         const priority = priorityInput.value;
@@ -171,9 +180,13 @@ const TaskForm = (() => {
 
         taskList.updateItem(taskId, { title, priority, deadline, description, taskListId });
 
-        clearFields();
+        resetForm();
         Subject.notify(todo);
     };
+
+    const getFields = (taskForm) => {
+        return Array.from(taskForm.elements);   
+    }
 
     const fillFields = (taskId, task) => {
         const taskForm = document.querySelector('.task-form');
@@ -182,16 +195,18 @@ const TaskForm = (() => {
             deadlineInput,
             descriptionInput,
             taskListInput,
-            button] = Array.from(taskForm.elements);
+            button] = getFields(taskForm);
+        
         titleInput.value = task.title;
         priorityInput.value = task.priority;
         deadlineInput.value = task.deadline;
-        descriptionInput.value = task.description
-
+        descriptionInput.value = task.description;
+        const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
+        taskListLabel.classList.add('hidden');
         taskListInput.classList.add('hidden');
 
         button.textContent = 'Update';
-        button.onclick = (event) => updateTask(event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput, button);
+        button.onclick = (event) => updateTask(event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListLabel, taskListInput, button);
     };
 
     const update = () => {
