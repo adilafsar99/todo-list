@@ -3,9 +3,6 @@
 }
 
 .task-list-section-root {
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: 0.5em;
     color: var(--color-white);
     background-color: var(--task-lists-color);
     padding: 0.5em;

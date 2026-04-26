@@ -1,3 +1,13 @@
 .menu-section-root {
     border-left: 0.5em solid var(--header-color);
 }
+
+.tab {
+    padding: 0.5em;
+    background-color: var(--hover-color);
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: var(--header-color);
+}

@@ -1,0 +1,5 @@
+.sort-tabs-root {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 0.5em;
+}
