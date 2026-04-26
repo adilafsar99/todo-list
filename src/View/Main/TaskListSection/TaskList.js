@@ -28,7 +28,7 @@ const TaskLists = (() => {
         input.value = taskList.title;
         input.maxLength = 20;
         input.readOnly = true;
-        
+
         // Change active task list
         input.onclick = (event) => {
             if (input.readOnly) {
@@ -40,7 +40,7 @@ const TaskLists = (() => {
                 Subject.notify(todo);
             }
         };
-        
+
         // Change the editButton icon based on the value of the title input
         input.oninput = () => {
             if (!input.value) {
@@ -49,28 +49,21 @@ const TaskLists = (() => {
             }
             else {
                 editButton.innerHTML = checkIcon.outerHTML;
-                editButton.onclick = (event) => {
-                    const id = event.target.closest('.task-list').dataset.id;
-                    const state = { title: input.value };
-                    updateTaskList(id, state);
-                    input.readOnly = true;
-                    editButton.innerHTML = editIcon.outerHTML;
-                    editButton.onclick = () => enableInput(input, editButton, checkIcon);
-                };
+                editButton.onclick = (event) => updateTaskList(event, input, editButton, editIcon, checkIcon);
             }
         };
 
         const editButton = document.createElement('button');
         editButton.classList.add('task-list-button');
         editButton.id = 'edit-button';
-        editButton.onclick = () => enableInput(input, editButton, checkIcon);
+        editButton.onclick = () => enableInput(input, editButton, editIcon, checkIcon);
 
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('task-list-button');
         deleteButton.id = 'delete-button';
         deleteButton.onclick = (event) => {
             const id = event.target.closest('.task-list').dataset.id;
-            deleteTaskList(id);   
+            deleteTaskList(id);
         };
 
         const xIcon = document.createElement('i');
@@ -93,9 +86,22 @@ const TaskLists = (() => {
         return form;
     };
 
-    const enableInput = (input, editButton, checkIcon) => {
+    const enableInput = (input, editButton, editIcon, checkIcon) => {
         input.readOnly = false;
         editButton.innerHTML = checkIcon.outerHTML;
+        editButton.onclick = (event) => updateTaskList(event, input, editButton, editIcon, checkIcon);
+    };
+
+    const updateTaskList = (event, input, editButton, editIcon, checkIcon) => {
+        const taskListId = event.target.closest('.task-list').dataset.id;
+        const state = { title: input.value };
+        input.readOnly = true;
+        editButton.innerHTML = editIcon.outerHTML;
+        editButton.onclick = () => enableInput(input, editButton, checkIcon);
+        const taskList = todo.updateItem(taskListId, state);
+        if (todo.activeItem.id === taskList.id) {
+            Subject.notify(todo);
+        }
     };
 
     const update = () => {
@@ -106,13 +112,6 @@ const TaskLists = (() => {
             let taskListForm = createTaskListForm(taskList);
             root.appendChild(taskListForm);
         });
-    };
-
-    const updateTaskList = (id, state) => {
-        const taskList = todo.updateItem(id, state);
-        if (todo.activeItem.id === taskList.id) {
-            Subject.notify(todo);
-        }
     };
 
     const deleteTaskList = (id) => {
