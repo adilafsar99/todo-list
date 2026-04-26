@@ -71,8 +71,9 @@ const createTaskListMethods = () => {
         }
     };
 
-    const sortList = function (sortParam, isDescending) {
-        this.list.sort((a, b) => {
+    const sortList = function (list, sortParam, isDescending) {
+        const sortedList = [...list];
+        sortedList.sort((a, b) => {
             if (isDescending) {
                 [a, b] = [b, a];
             }
@@ -85,8 +86,8 @@ const createTaskListMethods = () => {
         })
     };
 
-    const filterList = function (paramType, paramValue) {
-        this.list.filter(task => {
+    const filterList = function (list, paramType, paramValue) {
+        list.filter(task => {
             switch (paramType) {
                 case 'day':
                     return format(task.deadline, 'EEEE').toLowerCase() === paramValue;
