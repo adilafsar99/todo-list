@@ -5,6 +5,13 @@ const TaskForm = (() => {
     const create = () => {
         const root = document.createElement('div');
         root.classList.add('task-form-root');
+        root.onclick = (event) =>{
+            if (!event.target.classList.contains('task-form-root')) {
+                return;
+            }
+            clearFields();
+            toggleVisibility();
+        };
 
         const form = document.createElement('form');
         form.classList.add('task-form');
