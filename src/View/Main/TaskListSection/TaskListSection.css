@@ -12,10 +12,6 @@
     border-right: 0.5em solid var(--header-color);
 }
 
-#task-list-heading {
-    font-size: 1.5em;
-}
-
 #create-task-list-form-button {
     width: 100%;
     padding: 0.3em;

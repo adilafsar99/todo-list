@@ -1,10 +1,11 @@
 const Heading = (() => {
     const create = () => {
         const root = document.createElement('div');
-        root.classList.add('task-list-heading-root');
+        root.classList.add('task-list-section-heading-root');
 
         const heading = document.createElement('p');
-        heading.id = 'task-list-heading';
+        heading.classList.add('section-heading');
+        heading.id = 'task-list-section-heading';
         heading.textContent = 'Task Lists';
 
         root.appendChild(heading);

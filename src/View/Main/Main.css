@@ -12,3 +12,7 @@
     background-color: var(--task-lists-color);
     padding: 0.5em;
 }
+
+.section-heading {
+    font-size: 1.5em;
+}
