@@ -1,19 +1,20 @@
-import Observer from './../../../Observer/Observer.js';
+import Subject from '../../../Subject/Subject.js';
+import todo from './../../../State/Todo.js';
 
 const TaskLists = (() => {
-    const create = (todo) => {
+    const create = () => {
         const root = document.createElement('div');
         root.classList.add('task-lists-root');
 
         todo.list.forEach(taskList => {
-            let taskListForm = createTaskListForm(todo, taskList);
+            let taskListForm = createTaskListForm(taskList);
             root.appendChild(taskListForm);
         });
 
         return root;
     };
 
-    const createTaskListForm = (todo, taskList) => {
+    const createTaskListForm = (taskList) => {
         const form = document.createElement('div');
         form.classList.add('task-list');
         form.dataset.id = taskList.id;
@@ -36,7 +37,7 @@ const TaskLists = (() => {
                     return;
                 }
                 todo.setActiveItem(id);
-                Observer.notify(todo);
+                Subject.notify(todo);
             }
         };
         
@@ -51,7 +52,7 @@ const TaskLists = (() => {
                 editButton.onclick = (event) => {
                     const id = event.target.closest('.task-list').dataset.id;
                     const state = { title: input.value };
-                    updateTaskList(todo, id, state);
+                    updateTaskList(id, state);
                     input.readOnly = true;
                     editButton.innerHTML = editIcon.outerHTML;
                     editButton.onclick = () => enableInput(input, editButton, checkIcon);
@@ -69,7 +70,7 @@ const TaskLists = (() => {
         deleteButton.id = 'delete-button';
         deleteButton.onclick = (event) => {
             const id = event.target.closest('.task-list').dataset.id;
-            deleteTaskList(todo, id);   
+            deleteTaskList(id);   
         };
 
         const xIcon = document.createElement('i');
@@ -97,35 +98,35 @@ const TaskLists = (() => {
         editButton.innerHTML = checkIcon.outerHTML;
     };
 
-    const update = (todo) => {
+    const update = () => {
         const root = document.querySelector('.task-lists-root');
         root.innerHTML = '';
 
         todo.list.forEach(taskList => {
-            let taskListForm = createTaskListForm(todo, taskList);
+            let taskListForm = createTaskListForm(taskList);
             root.appendChild(taskListForm);
         });
     };
 
-    const updateTaskList = (todo, id, state) => {
+    const updateTaskList = (id, state) => {
         const taskList = todo.updateItem(id, state);
         if (todo.activeItem.id === taskList.id) {
-            Observer.notify(todo);
+            Subject.notify(todo);
         }
     };
 
-    const deleteTaskList = (todo, id) => {
+    const deleteTaskList = (id) => {
         const activeItem = todo.activeItem;
         const taskList = todo.removeItem(id);
         if (activeItem === taskList) {
             todo.setActiveItem();
         }
-        Observer.notify(todo);
+        Subject.notify(todo);
     };
 
     return { create, update };
 })();
 
-Observer.subscribe(TaskLists.update);
+Subject.subscribe(TaskLists.update);
 
 export default TaskLists;

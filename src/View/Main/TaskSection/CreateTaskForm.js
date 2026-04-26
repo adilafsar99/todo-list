@@ -1,7 +1,7 @@
 import TaskForm from './TaskForm.js';
 
 const CreateTaskForm = (() => {
-    const create = (todo) => {
+    const create = () => {
         const root = document.createElement('div');
         root.classList.add('create-task-form-root');
 
@@ -10,7 +10,7 @@ const CreateTaskForm = (() => {
         button.textContent = 'New Task';
         button.onclick = () => TaskForm.toggleVisibility();
 
-        const taskForm = TaskForm.create(todo);
+        const taskForm = TaskForm.create();
 
         root.append(button, taskForm);
 

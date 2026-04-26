@@ -1,28 +1,32 @@
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
-import Observer from './../../../Observer/Observer.js';
+import Observer from '../../../Subject/Subject.js';
+import todo from '../../../State/Todo.js';
+
 import TaskForm from './TaskForm.js';
 
 const Tasks = (() => {
-    const create = (todo) => {
+    const create = () => {
         const root = document.createElement('div');
         root.classList.add('tasks-root');
-      
-        todo.activeItem.list.forEach(task => {
-            const taskCard = createTaskCard(task, todo);
-            root.append(taskCard);
-        });
+
+        if (todo.activeItem) {
+            todo.activeItem.list.forEach(task => {
+                const taskCard = createTaskCard(task);
+                root.append(taskCard);
+            });
+        };
 
         return root;
     };
 
-    const createTaskCard = (task, todo) => {
+    const createTaskCard = (task) => {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = todo.activeItem.id;
         taskCard.dataset.taskId = task.id;
         taskCard.onclick = (event) => openTaskCard(event);
-        
+
         const checkboxCol = document.createElement('div');
         checkboxCol.classList.add('checkbox-col');
 
@@ -33,7 +37,7 @@ const Tasks = (() => {
 
         const contentCol = document.createElement('div');
         contentCol.classList.add('content-col');
-        
+
         const closedCardContent = document.createElement('div');
         closedCardContent.classList.add('closed-card-content');
 
@@ -56,7 +60,7 @@ const Tasks = (() => {
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
         taskTitle.textContent = task.title;
-        
+
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
         taskDeadline.textContent = format(task.deadline, 'dd-MMM-yyyy');
@@ -73,7 +77,7 @@ const Tasks = (() => {
         icon.classList.add('fas', 'fa-pen-to-square');
 
         button.appendChild(icon);
-        
+
         checkboxCol.appendChild(checkbox);
 
         taskListRow.appendChild(taskListTitle);
@@ -84,7 +88,7 @@ const Tasks = (() => {
         openCardContent.append(taskDescription, buttonRow);
 
         contentCol.append(closedCardContent, openCardContent);
-        
+
         taskCard.append(checkboxCol, contentCol);
 
         return taskCard;
@@ -107,27 +111,29 @@ const Tasks = (() => {
         }
     };
 
-    const editTask = (event, todo) => {
+    const editTask = (event) => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const task = todo.activeItem.getItem(taskId);
-        TaskForm.fillFields(taskId, task, todo);
+        TaskForm.fillFields(taskId, task);
         TaskForm.toggleVisibility();
     };
 
-    const markComplete = (event, todo) => {
+    const markComplete = (event) => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const task = todo.activeItem.getItem(taskId);
         task.toggleIsComplete();
     };
 
-    const update = (todo) => {
+    const update = () => {
         const root = document.querySelector('.tasks-root');
         root.innerHTML = '';
 
-        todo.activeItem.list.forEach(task => {
-            let taskCard = createTaskCard(task, todo);
-            root.appendChild(taskCard);
-        });
+        if (todo.activeItem) {
+            todo.activeItem.list.forEach(task => {
+                let taskCard = createTaskCard(task, todo);
+                root.appendChild(taskCard);
+            });
+        }
     };
 
     return { create, update };

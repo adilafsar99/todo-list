@@ -1,7 +1,8 @@
-import Observer from './../../../Observer/Observer.js';
+import todo from './../../../State/Todo.js';
+import Observer from '../../../Subject/Subject.js';
 
 const TaskListForm = (() => {
-    const create = (createTaskListFormButton, todo) => {
+    const create = (createTaskListFormButton) => {
         const root = document.createElement('div');
         root.classList.add('task-list-form-root', 'hidden');
 
@@ -24,7 +25,7 @@ const TaskListForm = (() => {
             }
             else {
                 button.innerHTML = checkIcon.outerHTML;
-                button.onclick = () => createTaskList(root, createTaskListFormButton, input, todo, button, xIcon);
+                button.onclick = () => createTaskList(root, createTaskListFormButton, input, button, xIcon);
             };
         };
 
@@ -46,7 +47,7 @@ const TaskListForm = (() => {
         return root;
     };
 
-    const createTaskList = (root, createTaskListFormButton, input, todo, button, xIcon) => {
+    const createTaskList = (root, createTaskListFormButton, input, button, xIcon) => {
         root.classList.toggle('hidden');
         createTaskListFormButton.classList.toggle('hidden');
         const state = { title: input.value };
