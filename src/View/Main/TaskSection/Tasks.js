@@ -115,7 +115,8 @@ const Tasks = (() => {
     const editTask = (event) => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const task = todo.activeItem.getItem(taskId);
-        TaskForm.fillFields(taskId, task);
+        TaskForm.fillFields(task);
+        TaskForm.setTaskId(taskId);
         TaskForm.toggleVisibility();
     };
 
@@ -131,7 +132,7 @@ const Tasks = (() => {
 
         if (todo.activeItem) {
             todo.activeItem.list.forEach(task => {
-                let taskCard = createTaskCard(task, todo);
+                let taskCard = createTaskCard(task);
                 root.appendChild(taskCard);
             });
         }

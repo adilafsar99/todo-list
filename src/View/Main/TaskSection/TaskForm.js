@@ -5,7 +5,7 @@ const TaskForm = (() => {
     const create = () => {
         const root = document.createElement('div');
         root.classList.add('task-form-root');
-        root.onclick = (event) =>{
+        root.onclick = (event) => {
             if (!event.target.classList.contains('task-form-root')) {
                 return;
             }
@@ -15,6 +15,17 @@ const TaskForm = (() => {
 
         const form = document.createElement('form');
         form.classList.add('task-form');
+        form.onsubmit = (event) => {
+            if (form.checkValidity()) {
+                event.preventDefault();
+            }
+            if (event.submitter.textContent === 'Create') {
+                createTask(titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+            } else {
+                const taskId = form.dataset.taskId;
+                updateTask(taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+            }
+        };
 
         const titleRow = document.createElement('div');
         titleRow.classList.add('form-row', 'title-row');
@@ -83,7 +94,6 @@ const TaskForm = (() => {
         descriptionInput.id = 'description-input';
         descriptionInput.rows = 5;
         descriptionInput.maxLength = 50;
-        descriptionInput.required = true;
 
         const taskListRow = document.createElement('div');
         taskListRow.classList.add('form-row');
@@ -106,7 +116,6 @@ const TaskForm = (() => {
         const button = document.createElement('button');
         button.id = 'create-task-button';
         button.textContent = 'Create';
-        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
 
         titleRow.append(titleLabel, titleInput);
         priorityRow.append(priorityLabel, priorityInput);
@@ -132,26 +141,28 @@ const TaskForm = (() => {
         }
     };
 
+    const setTaskId = (taskId) => {
+        const taskForm = document.querySelector('.task-form');
+        taskForm.dataset.taskId = taskId;
+    };
+
     const resetForm = () => {
         const taskForm = document.querySelector('.task-form');
-        const [titleInput,
-            priorityInput,
-            deadlineInput,
-            descriptionInput,
+        const [,,,,
             taskListInput,
             button] = getFields(taskForm);
         const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
-
+        
+        taskForm.dataset.taskId = '';
         taskListLabel.classList.remove('hidden');
         taskListInput.classList.remove('hidden');
         button.textContent = 'Create';
-        button.onclick = (event) => createTask(event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+        button.onclick = '';
 
         taskForm.reset();
     };
 
-    const createTask = (event, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
-        event.preventDefault();
+    const createTask = (titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
         toggleVisibility();
 
         const title = titleInput.value;
@@ -166,8 +177,7 @@ const TaskForm = (() => {
         Subject.notify(todo);
     };
 
-    const updateTask = (event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListLabel, taskListInput, button) => {
-        event.preventDefault();
+    const updateTask = (taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
         toggleVisibility();
 
         const title = titleInput.value;
@@ -185,10 +195,10 @@ const TaskForm = (() => {
     };
 
     const getFields = (taskForm) => {
-        return Array.from(taskForm.elements);   
+        return Array.from(taskForm.elements);
     }
 
-    const fillFields = (taskId, task) => {
+    const fillFields = (task) => {
         const taskForm = document.querySelector('.task-form');
         const [titleInput,
             priorityInput,
@@ -196,7 +206,7 @@ const TaskForm = (() => {
             descriptionInput,
             taskListInput,
             button] = getFields(taskForm);
-        
+
         titleInput.value = task.title;
         priorityInput.value = task.priority;
         deadlineInput.value = task.deadline;
@@ -206,7 +216,6 @@ const TaskForm = (() => {
         taskListInput.classList.add('hidden');
 
         button.textContent = 'Update';
-        button.onclick = (event) => updateTask(event, taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListLabel, taskListInput, button);
     };
 
     const update = () => {
@@ -220,7 +229,7 @@ const TaskForm = (() => {
         });
     };
 
-    return { create, update, fillFields, toggleVisibility };
+    return { create, update, fillFields, toggleVisibility, setTaskId };
 })();
 
 Subject.subscribe(TaskForm.update);

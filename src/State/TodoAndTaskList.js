@@ -16,7 +16,7 @@ const createTodoAndTaskListMethods = () => {
     const updateItem = function (id, state) {
         const item = this.getItem(id);
         for (let key in state) {
-            if (state[key]) {
+            if (state[key] !== undefined) {
                 item[key] = state[key];
             }
         }
