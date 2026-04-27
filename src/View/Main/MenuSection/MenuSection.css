@@ -4,10 +4,11 @@
 
 .tab {
     padding: 0.5em;
-    background-color: var(--hover-color);
+    background-color: var(--header-color);
     cursor: pointer;
 }
 
 .tab:hover {
-    background-color: var(--header-color);
+    background-color: var(--task-list-color);
+    outline: 2px solid var(--header-color);
 }

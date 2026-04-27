@@ -1,10 +1,18 @@
 import { format } from 'date-fns';
-import { createTaskListAndTaskFields as createTaskListFields } from './TaskListAndTask.js';
+import { createTaskListAndTaskFields } from './TaskListAndTask.js';
 import createTask from './Task.js';
 import createTaskList from './TaskList.js';
 
-const createTodoAndTaskListFields = ({ list = [], activeItem = null }) => ({
-    list,
+const createTodoAndTaskListFields = ({ list = [] }) => ({
+    list
+});
+
+const createTaskListFields = ({sortOptions = {sortParam: '', sortOrder: 'ascending'}, filterOptions = {filterParam: '', filterValue: ''}}) => ({
+    sortOptions,
+    filterOptions
+});
+
+const createTodoFields = ({ activeItem = null }) => ({
     activeItem,
 });
 
@@ -71,24 +79,24 @@ const createTaskListMethods = () => {
         }
     };
 
-    const sortList = function (list, sortParam, isDescending) {
-        const sortedList = [...list];
-        sortedList.sort((a, b) => {
-            if (isDescending) {
+    const sortList = function ({sortParam, sortOrder}) {
+        const sortedList = [...this.list];
+        return sortedList.sort((a, b) => {
+            if (sortOrder === 'descending') {
                 [a, b] = [b, a];
             }
             switch (sortParam) {
                 case 'priority':
                     return getPriorityValue(a.priority) - getPriorityValue(b.priority);
                 case 'deadline':
-                    return a.deadline - b.deadline;
+                    return new Date(a.deadline) - new Date(b.deadline);
             }
         })
     };
 
-    const filterList = function (list, paramType, paramValue) {
-        list.filter(task => {
-            switch (paramType) {
+    const filterList = function ({filterParam, filterValue}) {
+        return this.list.filter(task => {
+            switch (filterParam) {
                 case 'day':
                     return format(task.deadline, 'EEEE').toLowerCase() === paramValue;
                 case 'date':
@@ -96,7 +104,7 @@ const createTaskListMethods = () => {
                 case 'month':
                     return format(task.deadline, 'mm') === format(new Date(), 'mm');
                 case 'priority':
-                    return task.priority === paramValue;
+                    return task.priority === filterValue;
 
             }
         })
@@ -116,8 +124,9 @@ const createTodoMethods = () => {
 
 const createTaskListObject = (state) => {
     const commonFields = createTodoAndTaskListFields(state);
+    const taskListAndTaskFields = createTaskListAndTaskFields(state);
     const taskListFields = createTaskListFields(state);
-    return Object.assign({}, commonFields, taskListFields);
+    return Object.assign({}, commonFields, taskListAndTaskFields, taskListFields);
 };
 
 const attachTaskListMethods = (taskListObj) => {
@@ -127,8 +136,9 @@ const attachTaskListMethods = (taskListObj) => {
 };
 
 const createTodoObject = (state) => {
-    const todoFields = createTodoAndTaskListFields(state);
-    return Object.assign({}, todoFields);
+    const commonFields = createTodoAndTaskListFields(state);
+    const todoFields = createTodoFields(state);
+    return Object.assign({}, commonFields, todoFields);
 };
 
 const attachTodoMethods = (todoObj) => {

@@ -11,7 +11,11 @@ const Tasks = (() => {
         root.classList.add('tasks-root');
 
         if (todo.activeItem) {
-            todo.activeItem.list.forEach(task => {
+            let list = todo.activeItem.list;
+            if (todo.activeItem.sortOptions.sortParam) {
+                list = todo.activeItem.sortList(todo.activeItem.sortOptions)
+            }
+            list.forEach(task => {
                 const taskCard = createTaskCard(task);
                 root.append(taskCard);
             });
@@ -25,7 +29,6 @@ const Tasks = (() => {
         taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = todo.activeItem.id;
         taskCard.dataset.taskId = task.id;
-        console.log(taskCard.dataset.taskId)
         taskCard.onclick = (event) => openTaskCard(event);
 
         const checkboxCol = document.createElement('div');
@@ -131,7 +134,11 @@ const Tasks = (() => {
         root.innerHTML = '';
 
         if (todo.activeItem) {
-            todo.activeItem.list.forEach(task => {
+            let list = todo.activeItem.list;
+            if (todo.activeItem.sortOptions.sortParam) {
+                list = todo.activeItem.sortList(todo.activeItem.sortOptions);
+            }
+            list.forEach(task => {
                 let taskCard = createTaskCard(task);
                 root.appendChild(taskCard);
             });

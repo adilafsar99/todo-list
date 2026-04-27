@@ -86,7 +86,7 @@ const TaskLists = (() => {
         } else {
             inputRow.append(input, editButton, deleteButton);
         }
-        
+
         form.append(inputRow);
 
         return form;
