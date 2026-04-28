@@ -4,9 +4,6 @@
 
 .task-section-root {
     grid-column: 2;
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: 0.5em;
     color: var(--color-white);
     background-color: var(--task-lists-color);
     padding: 0.5em;
@@ -86,11 +83,21 @@
     column-gap: 0.5em;
     padding: 0.5em;
     margin-bottom: 0.5em;
-    
-
     border: 2px solid var(--hover-color);
     border-radius: 5px;
     background-color: var(--header-color);
+}
+
+.task-card[data-priority = 'low'] {
+    background-color: var(--color-green);
+}
+
+.task-card[data-priority = 'medium'] {
+    background-color: var(--color-yellow);
+}
+
+.task-card[data-priority = 'high'] {
+    background-color: var(--color-red);
 }
 
 .task-row {

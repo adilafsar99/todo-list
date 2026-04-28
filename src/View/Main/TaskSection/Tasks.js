@@ -29,6 +29,7 @@ const Tasks = (() => {
         taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = todo.activeItem.id;
         taskCard.dataset.taskId = task.id;
+        taskCard.dataset.priority = task.priority;
         taskCard.onclick = (event) => openTaskCard(event);
 
         const checkboxCol = document.createElement('div');
@@ -102,7 +103,7 @@ const Tasks = (() => {
         if (event.target.type === 'checkbox') {
             return;
         };
-        
+
         const target = event.target.closest('.task-card');
         const taskCards = document.querySelectorAll('.task-card');
         const targetOpenCardCol = target.children[1].lastChild;
