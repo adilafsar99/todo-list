@@ -13,7 +13,10 @@ const Tasks = (() => {
         if (todo.activeItem) {
             let list = todo.activeItem.list;
             if (todo.activeItem.sortOptions.sortParam) {
-                list = todo.activeItem.sortList(todo.activeItem.sortOptions)
+                list = todo.activeItem.sortList(todo.activeItem.sortOptions);
+            }
+            if (todo.activeItem.filterOptions.filterParam) {
+                list = todo.activeItem.filterList(todo.activeItem.filterOptions);
             }
             list.forEach(task => {
                 const taskCard = createTaskCard(task);
@@ -139,6 +142,9 @@ const Tasks = (() => {
             let list = todo.activeItem.list;
             if (todo.activeItem.sortOptions.sortParam) {
                 list = todo.activeItem.sortList(todo.activeItem.sortOptions);
+            }
+            if (todo.activeItem.filterOptions.filterParam) {
+                list = todo.activeItem.filterList(todo.activeItem.filterOptions);
             }
             list.forEach(task => {
                 let taskCard = createTaskCard(task);

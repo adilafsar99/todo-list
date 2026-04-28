@@ -13,7 +13,3 @@
 #sort-order-button {
     background-color: transparent;
 }
-
-.selected {
-    background-color: var(--hover-color);
-}

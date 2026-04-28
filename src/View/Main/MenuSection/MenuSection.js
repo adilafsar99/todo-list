@@ -1,6 +1,7 @@
 import './MenuSection.css';
 
 import SortSection from './SortSection/SortSection.js';
+import FilterSection from './FilterSection/FilterSection.js';
 
 const MenuSection = (() => {
     const create = () => {
@@ -8,8 +9,9 @@ const MenuSection = (() => {
         root.classList.add('section-root', 'menu-section-root', 'sidebar');
         
         const sortSection = SortSection.create();
+        const filterSection = FilterSection.create();
 
-        root.append(sortSection);
+        root.append(sortSection, filterSection);
 
         return root;
 

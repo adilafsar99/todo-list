@@ -12,3 +12,7 @@
     background-color: var(--task-list-color);
     outline: 2px solid var(--header-color);
 }
+
+.selected {
+    background-color: var(--hover-color);
+}
