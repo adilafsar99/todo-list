@@ -42,8 +42,8 @@ const SortTabs = (() => {
     const changeSortOrder = (event, upIcon, downIcon) => {
         const sortOrderButton = event.target.closest('#sort-order-button');
         const selectedTab = sortOrderButton.closest('.sort-tab');
-
-        if (todo.activeItem.sortOptions.sortOrder === 'ascending') {
+        
+        if (sortOrderButton.firstElementChild.classList.contains('fa-arrow-up')) {
             sortOrderButton.innerHTML = downIcon.outerHTML;
             todo.activeItem.sortOptions.sortOrder = 'descending';
         } else {
