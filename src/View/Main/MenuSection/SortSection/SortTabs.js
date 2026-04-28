@@ -13,7 +13,7 @@ const SortTabs = (() => {
             tab.classList.add('tab', 'sort-tab');
             tab.dataset.sortParam = sortOption;
             tab.dataset.sortOrder = 'ascending';
-            tab.onclick = (event) => applySort(event);
+            tab.onclick = (event) => changeSortParam(event);
 
             const tabText = document.createElement('p');
             tabText.classList.add('tab-text', 'sort-tab-text');
@@ -43,37 +43,32 @@ const SortTabs = (() => {
         const sortOrderButton = event.target.closest('#sort-order-button');
         const selectedTab = sortOrderButton.closest('.sort-tab');
 
-        if (selectedTab.dataset.sortOrder === 'ascending') {
-            selectedTab.dataset.sortOrder = 'descending';
+        if (todo.activeItem.sortOptions.sortOrder === 'ascending') {
             sortOrderButton.innerHTML = downIcon.outerHTML;
+            todo.activeItem.sortOptions.sortOrder = 'descending';
         } else {
-            selectedTab.dataset.sortOrder = 'ascending';
             sortOrderButton.innerHTML = upIcon.outerHTML;
+            todo.activeItem.sortOptions.sortOrder = 'ascending';
         }
         if (selectedTab.classList.contains('selected')) {
             Subject.notify();
         }
     };
 
-    const applySort = (event) => {
+    const changeSortParam = (event) => {
         if (event.target.tagName === 'svg' || event.target.tagName === 'path') {
             return;
         }
         
         const tabs = Array.from(document.querySelectorAll('.sort-tab'));
-        const selectedTab = event.target.closest('.tab');
+        const selectedTab = event.target.closest('.sort-tab');
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
             todo.activeItem.sortOptions.sortParam = '';
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
-            const sortParam = selectedTab.dataset.sortParam;
-            const sortOrder = selectedTab.dataset.sortOrder;
-            todo.activeItem.sortOptions = {
-                sortParam,
-                sortOrder
-            };
+            todo.activeItem.sortOptions.sortParam = selectedTab.dataset.sortParam;
         }
         Subject.notify();
     };
