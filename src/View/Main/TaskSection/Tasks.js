@@ -11,14 +11,10 @@ const Tasks = (() => {
         root.classList.add('tasks-root');
 
         if (todo.activeItem) {
-            let list = todo.activeItem.list;
-            if (todo.activeItem.sortOptions.sortParam) {
-                list = todo.activeItem.sortList(todo.activeItem.sortOptions);
-            }
-            if (todo.activeItem.filterOptions.filterParam) {
-                list = todo.activeItem.filterList(todo.activeItem.filterOptions);
-            }
-            list.forEach(task => {
+            let tasks = todo.activeItem.list;
+            tasks = handleSort(tasks);
+            
+            tasks.forEach(task => {
                 const taskCard = createTaskCard(task);
                 root.append(taskCard);
             });
@@ -139,18 +135,22 @@ const Tasks = (() => {
         root.innerHTML = '';
 
         if (todo.activeItem) {
-            let list = todo.activeItem.list;
-            if (todo.activeItem.sortOptions.sortParam) {
-                list = todo.activeItem.sortList(todo.activeItem.sortOptions);
-            }
-            if (todo.activeItem.filterOptions.filterParam) {
-                list = todo.activeItem.filterList(todo.activeItem.filterOptions);
-            }
-            list.forEach(task => {
+            let tasks = todo.activeItem.list;
+            tasks = handleSort(tasks);
+            
+            tasks.forEach(task => {
                 let taskCard = createTaskCard(task);
                 root.appendChild(taskCard);
             });
         }
+    };
+
+    const handleSort = (list) => {
+        const sortOptions = todo.activeItem.sortOptions;
+        if (sortOptions.sortParam) {
+            list = todo.activeItem.sortList(sortOptions);
+        }
+        return list;
     };
 
     return { create, update };
