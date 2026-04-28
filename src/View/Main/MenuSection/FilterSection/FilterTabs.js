@@ -21,7 +21,7 @@ const FilterTabs = (() => {
 
             filterOptions[key].forEach(filterOption => {
                 const tab = document.createElement('div');
-                tab.classList.add('tab', 'filter-tab');
+                tab.classList.add('tab', 'filter-tab', `${key}-tab`);
                 tab.dataset.filterParam = filterOption;
                 tab.onclick = (event) => changeFilterParam(event);
 
@@ -39,8 +39,9 @@ const FilterTabs = (() => {
     };
 
     const changeFilterParam = (event) => {
-        const tabs = Array.from(document.querySelectorAll('.filter-tab'));
-        const selectedTab = event.target.closest('.filter-tab');
+        const tabSectionClass = event.target.closest('.filter-tab').className.split(' ').filter(item => item.includes('tab')).at(-1);
+        const tabs = Array.from(document.querySelectorAll(`.${tabSectionClass}`));
+        const selectedTab = event.target.closest(`.${tabSectionClass}`);
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
             todo.activeItem.filterOptions.filterParam = '';
