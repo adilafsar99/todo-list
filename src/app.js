@@ -4,8 +4,10 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCheck, faX, faPenToSquare, faTrash);
+library.add(faCheck, faX, faPenToSquare, faTrash, faArrowUp, faArrowDown);
 dom.watch();
 
 renderApp();

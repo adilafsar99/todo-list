@@ -102,6 +102,7 @@ const Tasks = (() => {
         if (event.target.type === 'checkbox') {
             return;
         };
+        
         const target = event.target.closest('.task-card');
         const taskCards = document.querySelectorAll('.task-card');
         const targetOpenCardCol = target.children[1].lastChild;

@@ -4,6 +4,16 @@
     row-gap: 0.5em;
 }
 
+.sort-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#sort-order-button {
+    background-color: transparent;
+}
+
 .selected {
     background-color: var(--hover-color);
 }
