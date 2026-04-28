@@ -9,7 +9,7 @@ const FilterTabs = (() => {
         const filterOptions = {
             'status': ['complete', 'due', 'overdue'],
             'priority': ['low', 'medium', 'high'],
-            'deadline': ['today', 'this month']
+            'deadline': ['today', 'this month', 'date']
         };
 
         for (let key in filterOptions) {
@@ -22,7 +22,8 @@ const FilterTabs = (() => {
             filterOptions[key].forEach(filterOption => {
                 const tab = document.createElement('div');
                 tab.classList.add('tab', 'filter-tab', `${key}-tab`);
-                tab.dataset.filterParam = filterOption;
+                tab.dataset.filterParam = key;
+                tab.dataset.filterValue = filterOption;
                 tab.onclick = (event) => changeFilterParam(event);
 
                 const tabText = document.createElement('p');
@@ -42,14 +43,18 @@ const FilterTabs = (() => {
         const tabSectionClass = event.target.closest('.filter-tab').className.split(' ').filter(item => item.includes('tab')).at(-1);
         const tabs = Array.from(document.querySelectorAll(`.${tabSectionClass}`));
         const selectedTab = event.target.closest(`.${tabSectionClass}`);
+        const filterParam = selectedTab.dataset.filterParam;
+        const filterValue = selectedTab.dataset.filterValue;
+
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
-            todo.activeItem.filterOptions.filterParam = '';
+            todo.activeItem.filterOptions[filterParam] = '';
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
-            todo.activeItem.filterOptions.filterParam = selectedTab.dataset.filterParam;
+            todo.activeItem.filterOptions[filterParam] = filterValue;
         }
+
         Subject.notify();
     };
 

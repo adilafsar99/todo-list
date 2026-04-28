@@ -7,7 +7,7 @@ const createTodoAndTaskListFields = ({ list = [] }) => ({
     list
 });
 
-const createTaskListFields = ({sortOptions = {}, filterOptions = {filterParam: '', filterValue: ''}}) => ({
+const createTaskListFields = ({sortOptions = {}, filterOptions = {}}) => ({
     sortOptions,
     filterOptions
 });
