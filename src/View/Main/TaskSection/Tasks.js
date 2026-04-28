@@ -10,15 +10,7 @@ const Tasks = (() => {
         const root = document.createElement('div');
         root.classList.add('tasks-root');
 
-        if (todo.activeItem) {
-            let tasks = todo.activeItem.list;
-            tasks = handleSort(tasks);
-            
-            tasks.forEach(task => {
-                const taskCard = createTaskCard(task);
-                root.append(taskCard);
-            });
-        };
+        appendTaskCards(root);
 
         return root;
     };
@@ -134,16 +126,20 @@ const Tasks = (() => {
         const root = document.querySelector('.tasks-root');
         root.innerHTML = '';
 
+        appendTaskCards(root);
+    };
+
+    const appendTaskCards = (container) => {
         if (todo.activeItem) {
             let tasks = todo.activeItem.list;
             tasks = handleSort(tasks);
-            
+
             tasks.forEach(task => {
                 let taskCard = createTaskCard(task);
-                root.appendChild(taskCard);
+                container.appendChild(taskCard);
             });
         }
-    };
+    }
 
     const handleSort = (list) => {
         const sortOptions = todo.activeItem.sortOptions;
