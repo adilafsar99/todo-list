@@ -95,10 +95,6 @@ const createTaskListMethods = () => {
     };
 
     const filterList = function (list, { filterParam, filterValue }) {
-        if (!filterValue) {
-            return list;
-        }
-
         return list.filter(task => {
             switch (filterParam) {
                 case 'status':

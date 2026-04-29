@@ -144,8 +144,10 @@ const Tasks = (() => {
         const filterOptions = todo.activeItem.filterOptions;
 
         for (let filter in filterOptions) {
-            let filterConfig = { filterParam: filter, filterValue: filterOptions[filter] };
-            list = todo.activeItem.filterList(list, filterConfig);
+            if (filterOptions[filter]) {
+                let filterConfig = { filterParam: filter, filterValue: filterOptions[filter] };
+                list = todo.activeItem.filterList(list, filterConfig);
+            }
         }
 
         return list;
