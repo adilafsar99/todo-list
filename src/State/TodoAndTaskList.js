@@ -7,7 +7,7 @@ const createTodoAndTaskListFields = ({ list = [] }) => ({
     list
 });
 
-const createTaskListFields = ({sortOptions = {}, filterOptions = {}}) => ({
+const createTaskListFields = ({ sortOptions = {}, filterOptions = {} }) => ({
     sortOptions,
     filterOptions
 });
@@ -20,7 +20,7 @@ const createTodoAndTaskListMethods = () => {
     const getItem = function (id) {
         return this.list.find(item => item.id === id);
     };
-    
+
     const updateItem = function (id, state) {
         const item = this.getItem(id);
         for (let key in state) {
@@ -30,7 +30,7 @@ const createTodoAndTaskListMethods = () => {
         }
         return item;
     };
-    
+
     const removeItem = function (id) {
         let deletedItem;
         this.list = this.list.filter(item => {
@@ -79,7 +79,11 @@ const createTaskListMethods = () => {
         }
     };
 
-    const sortList = function ({sortParam, sortOrder}) {
+    const sortList = function ({ sortParam, sortOrder }) {
+        if (!sortParam) {
+            return this.list;
+        }
+        
         const sortedList = [...this.list];
         return sortedList.sort((a, b) => {
             if (sortOrder === 'descending') {
@@ -94,17 +98,23 @@ const createTaskListMethods = () => {
         })
     };
 
-    const filterList = function ({filterParam, filterValue}) {
+    const filterList = function ({ filterParam, filterValue }) {
         return this.list.filter(task => {
             switch (filterParam) {
-                case 'day':
-                    return format(task.deadline, 'EEEE').toLowerCase() === paramValue;
-                case 'date':
-                    return format(task.deadline, 'dd-mm-yyyy') === format(new Date(), 'dd-mm-yyyy');
-                case 'month':
-                    return format(task.deadline, 'mm') === format(new Date(), 'mm');
-                case 'priority':
-                    return task.priority === filterValue;
+                case 'status':
+                    if (filterValue === 'complete') {
+                        return task.isComplete;
+                    } else if (filterValue === 'due') {
+                        return new Date(task.deadline) >= new Date().setHours(0, 0, 0, 0);
+                    } else if (filterValue === 'overdue') {
+                        return new Date(task.deadline) < new Date().setHours(0, 0, 0, 0);
+                    }
+                // case 'date':
+                //     return format(task.deadline, 'dd-mm-yyyy') === format(new Date(), 'dd-mm-yyyy');
+                // case 'month':
+                //     return format(task.deadline, 'mm') === format(new Date(), 'mm');
+                // case 'priority':
+                //     return task.priority === filterValue;
 
             }
         })
