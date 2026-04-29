@@ -130,34 +130,35 @@ const Tasks = (() => {
     };
 
     const appendTaskCards = (container) => {
-        if (todo.activeItem) {
-            let tasks = todo.activeItem.list;
-            tasks = handleSort(tasks);
-            //tasks = handleFilter();
+        let tasks = todo.activeItem.list;
+        tasks = handleFilter(tasks);
+        tasks = handleSort(tasks);
 
-            tasks.forEach(task => {
-                let taskCard = createTaskCard(task);
-                container.appendChild(taskCard);
-            });
+        tasks.forEach(task => {
+            let taskCard = createTaskCard(task);
+            container.appendChild(taskCard);
+        })
+    };
+
+    const handleFilter = (list) => {
+        const filterOptions = todo.activeItem.filterOptions;
+
+        for (let filter in filterOptions) {
+            let filterConfig = { filterParam: filter, filterValue: filterOptions[filter] };
+            list = todo.activeItem.filterList(list, filterConfig);
         }
-    }
-
-    const handleSort = (list) => {
-        const sortOptions = todo.activeItem.sortOptions;
-        list = todo.activeItem.sortList(list, sortOptions);
 
         return list;
     };
 
-     const handleFilter = () => {
-        const filterOptions = todo.activeItem.filterOptions;
+    const handleSort = (list) => {
+        const sortOptions = todo.activeItem.sortOptions;
 
-        for (let filter in filterOptions) {
-            let filterConfig = {filterParam: filter, filterValue: filterOptions[filter]};
-            todo.activeItem.list = todo.activeItem.filterList(filterConfig);
+        if (sortOptions.sortParam) {
+            list = todo.activeItem.sortList(list, sortOptions);
         }
 
-        return todo.activeItem.list;
+        return list;
     };
 
     return { create, update };

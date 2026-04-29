@@ -62,6 +62,7 @@ const SortTabs = (() => {
         
         const tabs = Array.from(document.querySelectorAll('.sort-tab'));
         const selectedTab = event.target.closest('.sort-tab');
+
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
             todo.activeItem.sortOptions.sortParam = '';
@@ -70,6 +71,7 @@ const SortTabs = (() => {
             selectedTab.classList.add('selected');
             todo.activeItem.sortOptions.sortParam = selectedTab.dataset.sortParam;
         }
+        
         Subject.notify();
     };
 
