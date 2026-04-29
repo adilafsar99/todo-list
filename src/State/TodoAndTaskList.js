@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isAfter, isBefore, isThisMonth, isToday } from 'date-fns';
 import { createTaskListAndTaskFields } from './TaskListAndTask.js';
 import createTask from './Task.js';
 import createTaskList from './TaskList.js';
@@ -101,17 +101,18 @@ const createTaskListMethods = () => {
                     if (filterValue === 'complete') {
                         return task.isComplete;
                     } else if (filterValue === 'due') {
-                        return new Date(task.deadline) >= new Date().setHours(0, 0, 0, 0);
+                        return isBefore(new Date().setHours(0,0,0,0), new Date(task.deadline));
                     } else if (filterValue === 'overdue') {
-                        return new Date(task.deadline) < new Date().setHours(0, 0, 0, 0);
+                        return isAfter(new Date().setHours(0,0,0,0), new Date(task.deadline));
                     }
-                // case 'date':
-                //     return format(task.deadline, 'dd-mm-yyyy') === format(new Date(), 'dd-mm-yyyy');
-                // case 'month':
-                //     return format(task.deadline, 'mm') === format(new Date(), 'mm');
-                // case 'priority':
-                //     return task.priority === filterValue;
-
+                case 'priority':
+                    return task.priority === filterValue;
+                case 'deadline':
+                    if (filterValue === 'today') {
+                        return isToday(new Date(task.deadline));
+                    } else if (filterValue === 'this month') {
+                        return isThisMonth(new Date(task.deadline));
+                    }
             }
         })
     };

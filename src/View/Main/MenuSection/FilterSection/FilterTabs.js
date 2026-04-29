@@ -9,7 +9,7 @@ const FilterTabs = (() => {
         const filterOptions = {
             'status': ['complete', 'due', 'overdue'],
             'priority': ['low', 'medium', 'high'],
-            'deadline': ['today', 'this month', 'date']
+            'deadline': ['today', 'this month']
         };
 
         for (let key in filterOptions) {
