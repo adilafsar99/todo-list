@@ -79,12 +79,12 @@ const createTaskListMethods = () => {
         }
     };
 
-    const sortList = function ({ sortParam, sortOrder }) {
+    const sortList = function (list, { sortParam, sortOrder }) {
         if (!sortParam) {
-            return this.list;
+            return list;
         }
         
-        const sortedList = [...this.list];
+        const sortedList = [...list];
         return sortedList.sort((a, b) => {
             if (sortOrder === 'descending') {
                 [a, b] = [b, a];
@@ -98,8 +98,8 @@ const createTaskListMethods = () => {
         })
     };
 
-    const filterList = function ({ filterParam, filterValue }) {
-        return this.list.filter(task => {
+    const filterList = function (list, { filterParam, filterValue }) {
+        return list.filter(task => {
             switch (filterParam) {
                 case 'status':
                     if (filterValue === 'complete') {

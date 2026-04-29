@@ -131,8 +131,8 @@ const Tasks = (() => {
 
     const appendTaskCards = (container) => {
         if (todo.activeItem) {
-            let tasks;
-            tasks = handleSort();
+            let tasks = todo.activeItem.list;
+            tasks = handleSort(tasks);
             //tasks = handleFilter();
 
             tasks.forEach(task => {
@@ -142,20 +142,22 @@ const Tasks = (() => {
         }
     }
 
-    const handleSort = () => {
+    const handleSort = (list) => {
         const sortOptions = todo.activeItem.sortOptions;
-        return todo.activeItem.sortList(sortOptions);
+        list = todo.activeItem.sortList(list, sortOptions);
+
+        return list;
     };
 
-     const handleFilter = (list) => {
+     const handleFilter = () => {
         const filterOptions = todo.activeItem.filterOptions;
 
         for (let filter in filterOptions) {
             let filterConfig = {filterParam: filter, filterValue: filterOptions[filter]};
-            list = todo.activeItem.filterList(filterConfig);
+            todo.activeItem.list = todo.activeItem.filterList(filterConfig);
         }
 
-        return list;
+        return todo.activeItem.list;
     };
 
     return { create, update };
