@@ -101,9 +101,9 @@ const createTaskListMethods = () => {
                     if (filterValue === 'complete') {
                         return task.isComplete;
                     } else if (filterValue === 'due') {
-                        return isBefore(new Date().setHours(0,0,0,0), new Date(task.deadline));
+                        return !task.isComplete && isBefore(new Date().setHours(0,0,0,0), new Date(task.deadline));
                     } else if (filterValue === 'overdue') {
-                        return isAfter(new Date().setHours(0,0,0,0), new Date(task.deadline));
+                        return !task.isComplete && isAfter(new Date().setHours(0,0,0,0), new Date(task.deadline));
                     }
                 case 'priority':
                     return task.priority === filterValue;

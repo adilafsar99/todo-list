@@ -29,7 +29,8 @@ const Tasks = (() => {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = 'task-check-box';
-        checkbox.onchange = (event) => markComplete(event, todo);
+        checkbox.checked = task.isComplete;
+        checkbox.onchange = (event) => markComplete(event);
 
         const contentCol = document.createElement('div');
         contentCol.classList.add('content-col');
@@ -120,6 +121,7 @@ const Tasks = (() => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const task = todo.activeItem.getItem(taskId);
         task.toggleIsComplete();
+        Subject.notify();
     };
 
     const update = () => {
