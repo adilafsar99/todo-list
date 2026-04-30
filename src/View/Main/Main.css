@@ -1,5 +1,5 @@
 .main {
-    height: 90vh;
+    height: 92vh;
     display: grid;
     grid-template-columns: 20% 1fr 20%;
     text-align: center;
@@ -19,4 +19,10 @@
 
 .section-heading {
     font-size: 1.5em;
+}
+
+.date-input {
+    text-align: center;
+    color: inherit;
+    background-color: transparent;
 }

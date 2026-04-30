@@ -9,30 +9,46 @@ const FilterTabs = (() => {
         const filterOptions = {
             'status': ['complete', 'due', 'overdue'],
             'priority': ['low', 'medium', 'high'],
-            'deadline': ['today', 'this month']
+            'deadline': ['today', 'this month', 'date']
         };
 
         for (let key in filterOptions) {
             let subHeading = document.createElement('p');
             subHeading.classList.add('sub-heading');
-            subHeading.textContent =  `By ${key.slice(0,1).toUpperCase() + key.slice(1)}:`;
+            subHeading.textContent = `By ${key.slice(0, 1).toUpperCase() + key.slice(1)}:`;
 
             root.appendChild(subHeading);
 
             filterOptions[key].forEach(filterOption => {
-                const tab = document.createElement('div');
-                tab.classList.add('tab', 'filter-tab', `${key}-tab`);
-                tab.dataset.filterParam = key;
-                tab.dataset.filterValue = filterOption;
-                tab.onclick = (event) => changeFilterParam(event);
+                if (filterOption === 'date') {
+                    const label = document.createElement('label');
+                    label.for = 'date-filter';
 
-                const tabText = document.createElement('p');
-                tabText.classList.add('tab-text', 'filter-tab-text');
-                tabText.textContent = filterOption.slice(0, 1).toUpperCase() + filterOption.slice(1);
+                    const dateInput = document.createElement('input');
+                    dateInput.type = 'date';
+                    dateInput.classList.add('tab', 'filter-tab', `${key}-tab`, 'date-input');
+                    dateInput.id = 'date-filter';
+                    dateInput.required = 'true';
+                    dateInput.dataset.filterParam = key;
+                    dateInput.onchange = (event) => changeFilterParam(event);
 
-                tab.appendChild(tabText);
+                    root.appendChild(dateInput);
+                } else {
+                    const tab = document.createElement('div');
+                    tab.classList.add('tab', 'filter-tab', `${key}-tab`);
+                    tab.dataset.filterParam = key;
+                    tab.dataset.filterValue = filterOption;
+                    tab.onclick = (event) => changeFilterParam(event);
 
-                root.appendChild(tab);
+                    const tabText = document.createElement('p');
+                    tabText.classList.add('tab-text', 'filter-tab-text');
+                    tabText.textContent = filterOption.slice(0, 1).toUpperCase() + filterOption.slice(1);
+
+                    tab.appendChild(tabText);
+
+                    root.appendChild(tab);
+                }
+
             })
         }
 
@@ -46,13 +62,18 @@ const FilterTabs = (() => {
         const filterParam = selectedTab.dataset.filterParam;
         const filterValue = selectedTab.dataset.filterValue;
 
-        if (selectedTab.classList.contains('selected')) {
+        if ((selectedTab.classList.contains('selected') && selectedTab.type !== 'date') ||
+            (selectedTab.value === '')) {
             selectedTab.classList.remove('selected');
             todo.activeItem.filterOptions[filterParam] = '';
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
-            todo.activeItem.filterOptions[filterParam] = filterValue;
+            if (selectedTab.type === 'date') {
+                todo.activeItem.filterOptions[filterParam] = selectedTab.value;
+            } else {
+                todo.activeItem.filterOptions[filterParam] = filterValue;
+            }
         }
 
         Subject.notify();

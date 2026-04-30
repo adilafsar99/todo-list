@@ -1,4 +1,4 @@
-import { format, isAfter, isBefore, isThisMonth, isToday } from 'date-fns';
+import { format, isAfter, isBefore, isSameDay, isThisMonth, isToday } from 'date-fns';
 import { createTaskListAndTaskFields } from './TaskListAndTask.js';
 import createTask from './Task.js';
 import createTaskList from './TaskList.js';
@@ -112,6 +112,8 @@ const createTaskListMethods = () => {
                         return isToday(new Date(task.deadline));
                     } else if (filterValue === 'this month') {
                         return isThisMonth(new Date(task.deadline));
+                    } else {
+                        return isSameDay(new Date(filterValue), new Date(task.deadline));
                     }
             }
         })
