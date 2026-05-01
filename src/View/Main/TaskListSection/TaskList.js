@@ -105,7 +105,7 @@ const TaskLists = (() => {
         const state = { title: input.value };
         input.readOnly = true;
         editButton.innerHTML = editIcon.outerHTML;
-        editButton.onclick = () => enableInput(input, editButton, checkIcon);
+        editButton.onclick = () => enableInput(input, editButton, editIcon, checkIcon);
         const taskList = todo.updateItem(taskListId, state);
         LocalStorage.saveToStorage('todo', todo);
         if (todo.activeItem.id === taskList.id) {
