@@ -116,4 +116,14 @@
 
 .button-row {
     text-align: right;
+    margin-top: 0.5em;
+}
+
+.task-button {
+    padding: 0.1em;
+    background-color: transparent;
+}
+
+#edit-task-button {
+    margin-right: 0.2em
 }

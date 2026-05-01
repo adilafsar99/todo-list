@@ -1,4 +1,4 @@
-import { format, isAfter, isBefore, isSameDay, isThisMonth, isToday } from 'date-fns';
+import { isAfter, isBefore, isSameDay, isThisMonth, isToday } from 'date-fns';
 import { createTaskListAndTaskFields } from './TaskListAndTask.js';
 import createTask from './Task.js';
 import createTaskList from './TaskList.js';

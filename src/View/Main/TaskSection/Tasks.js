@@ -67,20 +67,30 @@ const Tasks = (() => {
         taskDescription.id = 'task-description';
         taskDescription.textContent = task.description;
 
-        const button = document.createElement('button');
-        button.id = 'edit-task-button';
-        button.onclick = (event) => editTask(event, todo);
+        const editButton = document.createElement('button');
+        editButton.classList.add('task-button');
+        editButton.id = 'edit-task-button';
+        editButton.onclick = (event) => editTask(event);
 
-        const icon = document.createElement('i');
-        icon.classList.add('fas', 'fa-pen-to-square');
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('task-button');
+        deleteButton.id = 'delete-task-button';
+        deleteButton.onclick = (event) => deleteTask(event);
 
-        button.appendChild(icon);
+        const editIcon = document.createElement('i');
+        editIcon.classList.add('fas', 'fa-pen-to-square');
+
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fas', 'fa-trash');
+
+        editButton.appendChild(editIcon);
+        deleteButton.appendChild(deleteIcon);
 
         checkboxCol.appendChild(checkbox);
 
         taskListRow.appendChild(taskListTitle);
         taskRow.append(taskTitle, taskDeadline);
-        buttonRow.appendChild(button);
+        buttonRow.append(editButton, deleteButton);
 
         closedCardContent.append(taskListRow, taskRow);
         openCardContent.append(taskDescription, buttonRow);
@@ -116,6 +126,12 @@ const Tasks = (() => {
         TaskForm.fillFields(task);
         TaskForm.setTaskId(taskId);
         TaskForm.toggleVisibility();
+    };
+
+    const deleteTask = (event) => {
+        const taskId = event.target.closest('.task-card').dataset.taskId;
+        todo.activeItem.removeItem(taskId);
+        Subject.notify();
     };
 
     const markComplete = (event) => {

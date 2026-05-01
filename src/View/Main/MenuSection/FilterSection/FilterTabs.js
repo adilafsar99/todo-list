@@ -44,7 +44,6 @@ const FilterTabs = (() => {
                 } else {
                     const tab = document.createElement('div');
                     tab.classList.add('tab', 'filter-tab', `${key}-tab`);
-                    console.log(todo.activeItem.filterOptions[key])
                     if (todo.activeItem.filterOptions[key] === filterOption) {
                         tab.classList.add('selected');
                     }

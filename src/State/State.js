@@ -3,7 +3,8 @@ import recreateTodo from './RecreateTodo.js'
 import LocalStorage from './LocalStorage.js';
 
 const State = (() => {
-    const state = recreateTodo(LocalStorage.getFromStorage('todo')) || createTodo({});
+    const todoObj = LocalStorage.getFromStorage('todo');
+    const state = todoObj ? recreateTodo(todoObj) : createTodo({});
     if (!state.list.length) {
         state.createItem({ title: 'General' });
         state.setActiveItem();
