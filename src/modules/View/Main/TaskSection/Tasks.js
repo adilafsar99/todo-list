@@ -17,7 +17,7 @@ const Tasks = (() => {
     };
 
     const createTaskCard = (task) => {
-        const taskCard = document.createElement('div');
+        const taskCard = document.createElement('button');
         taskCard.classList.add('task-card');
         taskCard.dataset.taskListId = todo.activeItem.id;
         taskCard.dataset.taskId = task.id;

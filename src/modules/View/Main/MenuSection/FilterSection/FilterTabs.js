@@ -45,7 +45,7 @@ const FilterTabs = (() => {
 
                     root.appendChild(dateInput);
                 } else {
-                    const tab = document.createElement('div');
+                    const tab = document.createElement('button');
                     tab.classList.add('tab', 'filter-tab', `${key}-tab`);
                     if (todo.filterConfig[key] === filterOption) {
                         tab.classList.add('selected');

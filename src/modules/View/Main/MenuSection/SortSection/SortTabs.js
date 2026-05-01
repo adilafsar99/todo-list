@@ -10,7 +10,7 @@ const SortTabs = (() => {
         const sortOptions = ['priority', 'deadline'];
 
         sortOptions.forEach(sortOption => {
-            const tab = document.createElement('div');
+            const tab = document.createElement('button');
             tab.classList.add('tab', 'sort-tab');
             if (todo.sortConfig.sortParam === sortOption) {
                 tab.classList.add('selected');

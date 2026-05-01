@@ -8,21 +8,21 @@ const TaskLists = (() => {
         root.classList.add('task-lists-root');
 
         todo.list.forEach(taskList => {
-            let taskListForm = createTaskListForm(taskList);
+            let taskListForm = createTaskList(taskList);
             root.appendChild(taskListForm);
         });
 
         return root;
     };
 
-    const createTaskListForm = (taskList) => {
-        const form = document.createElement('div');
+    const createTaskList = (taskList) => {
+        const form = document.createElement('button');
         form.classList.add('task-list');
         form.dataset.id = taskList.id;
 
         const inputRow = document.createElement('div');
         inputRow.classList.add('task-list-input-row');
-
+        
         const input = document.createElement('input');
         input.classList.add('task-list-input');
         input.name = 'title-input';
@@ -118,7 +118,7 @@ const TaskLists = (() => {
         root.innerHTML = '';
 
         todo.list.forEach(taskList => {
-            let taskListForm = createTaskListForm(taskList);
+            let taskListForm = createTaskList(taskList);
             root.appendChild(taskListForm);
         });
     };
