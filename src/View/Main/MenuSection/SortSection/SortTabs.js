@@ -16,7 +16,6 @@ const SortTabs = (() => {
                 tab.classList.add('selected');
             }
             tab.dataset.sortParam = sortOption;
-            tab.dataset.sortOrder = 'ascending';
             tab.onclick = (event) => changeSortParam(event);
 
             const tabText = document.createElement('p');
@@ -56,6 +55,7 @@ const SortTabs = (() => {
             todo.activeItem.sortOptions.sortOrder = 'ascending';
             LocalStorage.saveToStorage('todo', todo);
         }
+        
         if (selectedTab.classList.contains('selected')) {
             Subject.notify();
         }

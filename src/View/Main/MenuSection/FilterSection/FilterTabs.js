@@ -30,14 +30,17 @@ const FilterTabs = (() => {
                     dateInput.classList.add('tab', 'filter-tab', `${key}-tab`, 'date-input');
                     dateInput.id = 'date-filter';
                     dateInput.value = LocalStorage.getFromStorage('date') || '';
-                    if (todo.activeItem.filterOptions[key] === dateInput.value) {
+                    if (todo.activeItem.filterOptions[key] === LocalStorage.getFromStorage('date')) {
                         dateInput.classList.add('selected');
                     }
                     dateInput.required = 'true';
                     dateInput.dataset.filterParam = key;
-                    dateInput.onchange = (event) => {
-                        LocalStorage.saveToStorage('date', dateInput.value)
-                        changeFilterParam(event)
+                    dateInput.oninput = (event) => {
+                        LocalStorage.saveToStorage('date', dateInput.value);
+                        if (!dateInput.classList.contains('selected') && !dateInput.value) {
+                            return;
+                        }
+                        changeFilterParam(event);
                     };
 
                     root.appendChild(dateInput);
@@ -73,17 +76,22 @@ const FilterTabs = (() => {
         const filterParam = selectedTab.dataset.filterParam;
         const filterValue = selectedTab.dataset.filterValue;
 
-        if ((selectedTab.classList.contains('selected') && selectedTab.type !== 'date') ||
-            (selectedTab.value === '')) {
+        const clearDateFilter = selectedTab.classList.contains('selected') &&
+            selectedTab.type === 'date' && selectedTab.value === '';
+        const clearFilter = selectedTab.classList.contains('selected') &&
+            selectedTab.type !== 'date';
+
+        if (clearDateFilter || clearFilter) {
             selectedTab.classList.remove('selected');
             todo.activeItem.filterOptions[filterParam] = '';
             LocalStorage.saveToStorage('todo', todo);
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
+            console.log('no, this')
             if (selectedTab.type === 'date') {
                 todo.activeItem.filterOptions[filterParam] = selectedTab.value;
-                
+
             } else {
                 todo.activeItem.filterOptions[filterParam] = filterValue;
             }

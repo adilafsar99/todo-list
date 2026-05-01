@@ -131,6 +131,7 @@ const Tasks = (() => {
     const deleteTask = (event) => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         todo.activeItem.removeItem(taskId);
+        LocalStorage.saveToStorage('todo', todo)
         Subject.notify();
     };
 
@@ -153,7 +154,7 @@ const Tasks = (() => {
         let tasks = todo.activeItem.list;
         tasks = handleFilter(tasks);
         tasks = handleSort(tasks);
-
+        
         tasks.forEach(task => {
             let taskCard = createTaskCard(task);
             container.appendChild(taskCard);
