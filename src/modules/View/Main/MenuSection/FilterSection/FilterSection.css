@@ -4,6 +4,3 @@
     row-gap: 0.5em;
 }
 
-.selected {
-    background-color: var(--hover-color);
-}

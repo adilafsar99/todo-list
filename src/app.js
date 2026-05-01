@@ -1,4 +1,4 @@
-import renderApp from "./View/Todo.js";
+import renderApp from "./modules/View/Todo.js";
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faX } from "@fortawesome/free-solid-svg-icons";

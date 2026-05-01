@@ -3,9 +3,16 @@
     --color-green: #74c731;
     --color-yellow: #c7c431;
     --color-red: #cf473d;
-    --hover-color: #22979b;
     --header-color: #3bb2c2;
     --task-lists-color: #7ccfeb;
+    --hover-color: #22979b;
+}
+
+@font-face {
+    font-family: 'Cause';
+    src: url('../../assets/fonts/Cause-VariableFont_wght.ttf');
+    font-style: normal;
+    font-weight: normal;
 }
 
 * {
@@ -16,9 +23,12 @@
 
 body {
     height: 100vh;
+    font-family: 'Cause', sans-serif, system-ui;
 }
 
-button, input {
+button,
+input {
+    font-family: inherit;
     font-size: inherit;
     font-style: inherit;
     box-sizing: inherit;
