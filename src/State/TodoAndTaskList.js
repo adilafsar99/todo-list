@@ -7,13 +7,10 @@ const createTodoAndTaskListFields = ({ list = [] }) => ({
     list
 });
 
-const createTaskListFields = ({ sortOptions = {}, filterOptions = {} }) => ({
-    sortOptions,
-    filterOptions
-});
-
-const createTodoFields = ({ activeItem = null }) => ({
+const createTodoFields = ({ activeItem = null, sortConfig = {}, filterConfig = {} }) => ({
     activeItem,
+    sortConfig,
+    filterConfig
 });
 
 const createTodoAndTaskListMethods = () => {
@@ -132,10 +129,9 @@ const createTodoMethods = () => {
 };
 
 const createTaskListObject = (state) => {
-    const commonFields = createTodoAndTaskListFields(state);
+    const todoAndTaskListFields = createTodoAndTaskListFields(state);
     const taskListAndTaskFields = createTaskListAndTaskFields(state);
-    const taskListFields = createTaskListFields(state);
-    return Object.assign({}, commonFields, taskListAndTaskFields, taskListFields);
+    return Object.assign({}, todoAndTaskListFields, taskListAndTaskFields);
 };
 
 const attachTaskListMethods = (taskListObj) => {

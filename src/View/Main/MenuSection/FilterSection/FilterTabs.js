@@ -30,7 +30,7 @@ const FilterTabs = (() => {
                     dateInput.classList.add('tab', 'filter-tab', `${key}-tab`, 'date-input');
                     dateInput.id = 'date-filter';
                     dateInput.value = LocalStorage.getFromStorage('date') || '';
-                    if (todo.activeItem.filterOptions[key] === dateInput.value && dateInput.value) {
+                    if (todo.filterConfig[key] === dateInput.value && dateInput.value) {
                         dateInput.classList.add('selected');
                     }
                     dateInput.required = 'true';
@@ -47,7 +47,7 @@ const FilterTabs = (() => {
                 } else {
                     const tab = document.createElement('div');
                     tab.classList.add('tab', 'filter-tab', `${key}-tab`);
-                    if (todo.activeItem.filterOptions[key] === filterOption) {
+                    if (todo.filterConfig[key] === filterOption) {
                         tab.classList.add('selected');
                     }
                     tab.dataset.filterParam = key;
@@ -83,17 +83,16 @@ const FilterTabs = (() => {
 
         if (clearDateFilter || clearFilter) {
             selectedTab.classList.remove('selected');
-            todo.activeItem.filterOptions[filterParam] = '';
+            todo.filterConfig[filterParam] = '';
             LocalStorage.saveToStorage('todo', todo);
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
-            console.log('no, this')
             if (selectedTab.type === 'date') {
-                todo.activeItem.filterOptions[filterParam] = selectedTab.value;
+                todo.filterConfig[filterParam] = selectedTab.value;
 
             } else {
-                todo.activeItem.filterOptions[filterParam] = filterValue;
+                todo.filterConfig[filterParam] = filterValue;
             }
             LocalStorage.saveToStorage('todo', todo);
         }

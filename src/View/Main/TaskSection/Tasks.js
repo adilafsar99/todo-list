@@ -162,12 +162,12 @@ const Tasks = (() => {
     };
 
     const handleFilter = (list) => {
-        const filterOptions = todo.activeItem.filterOptions;
+        const filterConfig = todo.filterConfig;
 
-        for (let filter in filterOptions) {
-            if (filterOptions[filter]) {
-                let filterConfig = { filterParam: filter, filterValue: filterOptions[filter] };
-                list = todo.activeItem.filterList(list, filterConfig);
+        for (let filter in filterConfig) {
+            if (filterConfig[filter]) {
+                let appliedFilterConfig = { filterParam: filter, filterValue: filterConfig[filter] };
+                list = todo.activeItem.filterList(list, appliedFilterConfig);
             }
         }
 
@@ -175,10 +175,10 @@ const Tasks = (() => {
     };
 
     const handleSort = (list) => {
-        const sortOptions = todo.activeItem.sortOptions;
+        const sortConfig = todo.sortConfig;
 
-        if (sortOptions.sortParam) {
-            list = todo.activeItem.sortList(list, sortOptions);
+        if (sortConfig.sortParam) {
+            list = todo.activeItem.sortList(list, sortConfig);
         }
 
         return list;

@@ -12,7 +12,7 @@ const SortTabs = (() => {
         sortOptions.forEach(sortOption => {
             const tab = document.createElement('div');
             tab.classList.add('tab', 'sort-tab');
-            if (todo.activeItem.sortOptions.sortParam === sortOption) {
+            if (todo.sortConfig.sortParam === sortOption) {
                 tab.classList.add('selected');
             }
             tab.dataset.sortParam = sortOption;
@@ -48,11 +48,11 @@ const SortTabs = (() => {
         
         if (sortOrderButton.firstElementChild.classList.contains('fa-arrow-up')) {
             sortOrderButton.innerHTML = downIcon.outerHTML;
-            todo.activeItem.sortOptions.sortOrder = 'descending';
+            todo.sortConfig.sortOrder = 'descending';
             LocalStorage.saveToStorage('todo', todo);
         } else {
             sortOrderButton.innerHTML = upIcon.outerHTML;
-            todo.activeItem.sortOptions.sortOrder = 'ascending';
+            todo.sortConfig.sortOrder = 'ascending';
             LocalStorage.saveToStorage('todo', todo);
         }
         
@@ -71,12 +71,12 @@ const SortTabs = (() => {
 
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
-            todo.activeItem.sortOptions.sortParam = '';
+            todo.sortConfig.sortParam = '';
             LocalStorage.saveToStorage('todo', todo);
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
-            todo.activeItem.sortOptions.sortParam = selectedTab.dataset.sortParam;
+            todo.sortConfig.sortParam = selectedTab.dataset.sortParam;
             LocalStorage.saveToStorage('todo', todo);
         }
 
