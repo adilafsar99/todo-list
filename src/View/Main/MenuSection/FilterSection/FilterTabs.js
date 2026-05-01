@@ -30,7 +30,7 @@ const FilterTabs = (() => {
                     dateInput.classList.add('tab', 'filter-tab', `${key}-tab`, 'date-input');
                     dateInput.id = 'date-filter';
                     dateInput.value = LocalStorage.getFromStorage('date') || '';
-                    if (todo.activeItem.filterOptions[key] === LocalStorage.getFromStorage('date')) {
+                    if (todo.activeItem.filterOptions[key] === dateInput.value) {
                         dateInput.classList.add('selected');
                     }
                     dateInput.required = 'true';
