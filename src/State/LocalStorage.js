@@ -1,12 +1,12 @@
-const saveToStorage = (todo) => {
-    const todoString = JSON.stringify(todo);
-    localStorage.setItem('todo', todoString);
+const saveToStorage = (key, obj) => {
+    const objString = JSON.stringify(obj);
+    localStorage.setItem(key, objString);
 };
 
-const getFromStorage = () => {
-    const todoString = localStorage.getItem('todo');
-    const todoObj = JSON.parse(todoString);
-    return todoObj;
+const getFromStorage = (key) => {
+    const objString = localStorage.getItem(key);
+    const object = JSON.parse(objString);
+    return object;
 };
 
-export { saveToStorage, getFromStorage };
+export default { saveToStorage, getFromStorage };

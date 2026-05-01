@@ -1,5 +1,6 @@
-import todo from './../../../State/State.js';
+import todo from '../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
+import LocalStorage from '../../../State/LocalStorage.js';
 
 const TaskListForm = (() => {
     const create = (createTaskListFormButton) => {
@@ -53,6 +54,7 @@ const TaskListForm = (() => {
         const state = { title: input.value };
         const taskList = todo.createItem(state);
         todo.setActiveItem(taskList.id);
+        LocalStorage.saveToStorage('todo', todo);
         Subject.notify(todo);
         input.value = '';
         button.innerHTML = xIcon.outerHTML;

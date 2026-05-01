@@ -1,5 +1,6 @@
 import todo from './../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
+import LocalStorage from '../../../State/LocalStorage.js';
 
 const TaskForm = (() => {
     const create = () => {
@@ -153,7 +154,7 @@ const TaskForm = (() => {
             button] = getFields(taskForm);
         const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
         
-        taskForm.dataset.taskId = '';
+        setTaskId('');
         taskListLabel.classList.remove('hidden');
         taskListInput.classList.remove('hidden');
         button.textContent = 'Create';
@@ -172,6 +173,7 @@ const TaskForm = (() => {
         const taskList = todo.getItem(taskListInput.value);
 
         taskList.createItem({ title, priority, deadline, description, taskList });
+        LocalStorage.saveToStorage('todo', todo);
 
         resetForm();
         Subject.notify(todo);
@@ -189,6 +191,7 @@ const TaskForm = (() => {
         const taskList = todo.getItem(taskListInput.value);
 
         taskList.updateItem(taskId, { title, priority, deadline, description, taskListId });
+        LocalStorage.saveToStorage('todo', todo);
 
         resetForm();
         Subject.notify(todo);

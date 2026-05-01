@@ -1,3 +1,4 @@
+import LocalStorage from '../../../../State/LocalStorage.js';
 import todo from '../../../../State/State.js';
 import Subject from '../../../../Subject/Subject.js';
 
@@ -11,6 +12,9 @@ const SortTabs = (() => {
         sortOptions.forEach(sortOption => {
             const tab = document.createElement('div');
             tab.classList.add('tab', 'sort-tab');
+            if (todo.activeItem.sortOptions.sortParam === sortOption) {
+                tab.classList.add('selected');
+            }
             tab.dataset.sortParam = sortOption;
             tab.dataset.sortOrder = 'ascending';
             tab.onclick = (event) => changeSortParam(event);
@@ -46,9 +50,11 @@ const SortTabs = (() => {
         if (sortOrderButton.firstElementChild.classList.contains('fa-arrow-up')) {
             sortOrderButton.innerHTML = downIcon.outerHTML;
             todo.activeItem.sortOptions.sortOrder = 'descending';
+            LocalStorage.saveToStorage('todo', todo);
         } else {
             sortOrderButton.innerHTML = upIcon.outerHTML;
             todo.activeItem.sortOptions.sortOrder = 'ascending';
+            LocalStorage.saveToStorage('todo', todo);
         }
         if (selectedTab.classList.contains('selected')) {
             Subject.notify();
@@ -66,12 +72,14 @@ const SortTabs = (() => {
         if (selectedTab.classList.contains('selected')) {
             selectedTab.classList.remove('selected');
             todo.activeItem.sortOptions.sortParam = '';
+            LocalStorage.saveToStorage('todo', todo);
         } else {
             tabs.forEach(tab => tab.classList.remove('selected'));
             selectedTab.classList.add('selected');
             todo.activeItem.sortOptions.sortParam = selectedTab.dataset.sortParam;
+            LocalStorage.saveToStorage('todo', todo);
         }
-        
+
         Subject.notify();
     };
 

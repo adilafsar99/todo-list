@@ -1,5 +1,6 @@
 import todo from './../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
+import LocalStorage from '../../../State/LocalStorage.js';
 
 const TaskLists = (() => {
     const create = () => {
@@ -37,6 +38,7 @@ const TaskLists = (() => {
                     return;
                 }
                 todo.setActiveItem(id);
+                LocalStorage.saveToStorage('todo', todo);
                 Subject.notify(todo);
             }
         };
@@ -105,6 +107,7 @@ const TaskLists = (() => {
         editButton.innerHTML = editIcon.outerHTML;
         editButton.onclick = () => enableInput(input, editButton, checkIcon);
         const taskList = todo.updateItem(taskListId, state);
+        LocalStorage.saveToStorage('todo', todo);
         if (todo.activeItem.id === taskList.id) {
             Subject.notify(todo);
         }
@@ -126,6 +129,7 @@ const TaskLists = (() => {
         if (activeItem === taskList) {
             todo.setActiveItem();
         }
+        LocalStorage.saveToStorage('todo', todo);
         Subject.notify(todo);
     };
 

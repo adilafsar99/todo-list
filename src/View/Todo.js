@@ -1,5 +1,3 @@
-import recreateTodo from "../State/RecreateTodo.js";
-import { saveToStorage, getFromStorage } from "../State/LocalStorage.js";
 import Header from "./Header/Header.js";
 import Main from "./Main/Main.js";
 

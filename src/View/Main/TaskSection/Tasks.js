@@ -4,6 +4,7 @@ import todo from '../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
 
 import TaskForm from './TaskForm.js';
+import LocalStorage from '../../../State/LocalStorage.js';
 
 const Tasks = (() => {
     const create = () => {
@@ -121,6 +122,7 @@ const Tasks = (() => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const task = todo.activeItem.getItem(taskId);
         task.toggleIsComplete();
+        LocalStorage.saveToStorage('todo', todo);
         Subject.notify();
     };
 
