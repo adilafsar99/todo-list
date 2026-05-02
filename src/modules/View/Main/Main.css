@@ -3,11 +3,11 @@
     display: grid;
     grid-template-columns: 20% 1fr 20%;
     text-align: center;
+    color: var(--color-white);
+    background-color: var(--color-black);
 }
 
 .sidebar {
-    color: var(--color-white);
-    background-color: var(--task-lists-color);
     padding: 0.5em;
 }
 
@@ -19,6 +19,22 @@
 
 .section-heading {
     font-size: 1.5em;
+}
+
+.create-button {
+    width: 100%;
+    padding: 0.3em;
+    font-size: 1em;
+    font-weight: bold;
+    color: inherit;
+    background-color: var(--header-color);
+    border: 2px solid var(--header-color);
+    border-radius: 5px;
+}
+
+.create-button:hover {
+    background-color: transparent;
+    border-color: var(--color-white);
 }
 
 .date-input {

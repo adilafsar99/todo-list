@@ -1,11 +1,12 @@
 :root {
     --color-white: #ffffff;
+    --color-black: #111010e3;
     --color-green: #74c731;
     --color-yellow: #c7c431;
     --color-red: #cf473d;
     --header-color: #3bb2c2;
     --task-lists-color: #7ccfeb;
-    --hover-color: #22979b;
+    --hover-color: #1dbdee;
 }
 
 @font-face {
@@ -43,4 +44,9 @@ button {
 
 input {
     width: 100%;
+    padding: 0.2em;
+}
+
+input:focus {
+    outline: 1px solid var(--header-color);
 }

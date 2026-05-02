@@ -6,6 +6,7 @@ const CreateTaskForm = (() => {
         root.classList.add('create-task-form-root');
 
         const button = document.createElement('button');
+        button.classList.add('create-button');
         button.id = 'create-task-form-button';
         button.textContent = 'New Task';
         button.onclick = () => TaskForm.toggleVisibility();

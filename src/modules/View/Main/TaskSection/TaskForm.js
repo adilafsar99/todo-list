@@ -93,7 +93,7 @@ const TaskForm = (() => {
         const descriptionInput = document.createElement('textarea');
         descriptionInput.classList.add('task-input');
         descriptionInput.id = 'description-input';
-        descriptionInput.rows = 5;
+        descriptionInput.rows = 6;
         descriptionInput.maxLength = 50;
 
         const taskListRow = document.createElement('div');
@@ -118,11 +118,17 @@ const TaskForm = (() => {
         button.id = 'create-task-button';
         button.textContent = 'Create';
 
-        titleRow.append(titleLabel, titleInput);
-        priorityRow.append(priorityLabel, priorityInput);
-        deadlineRow.append(deadlineLabel, deadlineInput);
-        descriptionRow.append(descriptionLabel, descriptionInput);
-        taskListRow.append(taskListLabel, taskListInput);
+        titleLabel.appendChild(titleInput);
+        priorityLabel.appendChild(priorityInput);
+        deadlineLabel.appendChild(deadlineInput);
+        descriptionLabel.appendChild(descriptionInput);
+        taskListLabel.appendChild(taskListInput);
+
+        titleRow.appendChild(titleLabel);
+        priorityRow.appendChild(priorityLabel);
+        deadlineRow.appendChild(deadlineLabel);
+        descriptionRow.appendChild(descriptionLabel);
+        taskListRow.appendChild(taskListLabel);
 
         multiInputRow.append(priorityRow, deadlineRow);
 
@@ -152,7 +158,7 @@ const TaskForm = (() => {
         const [,,,,
             taskListInput,
             button] = getFields(taskForm);
-        const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
+        const taskListLabel = document.querySelector('#task-list-input').parentElement;
         
         setTaskId('');
         taskListLabel.classList.remove('hidden');

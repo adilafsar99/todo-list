@@ -11,6 +11,7 @@ export default {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/todo.html',
+            favicon: './src/assets/images/todo-list.png',
         }),
     ],
     module: {

@@ -6,6 +6,7 @@ const CreateTaskListForm = (() => {
         root.classList.add('create-task-list-form-root');
 
         const button = document.createElement('button');
+        button.classList.add('create-button');
         button.id = 'create-task-list-form-button';
         button.textContent = 'New Task List';
         button.onclick = () => {

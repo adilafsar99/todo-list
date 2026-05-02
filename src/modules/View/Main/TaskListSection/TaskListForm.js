@@ -8,13 +8,15 @@ const TaskListForm = (() => {
         root.classList.add('task-list-form-root', 'hidden');
 
         const form = document.createElement('div');
-        form.classList.add('task-list');
+        form.classList.add('create-task-list-form');
 
         const inputRow = document.createElement('div');
         inputRow.classList.add('task-list-input-row');
+        inputRow.id = 'create-task-list-input-row';
 
         const input = document.createElement('input');
         input.classList.add('task-list-input');
+        input.id = 'create-task-list-input';
         input.name = 'title-input';
         input.placeholder = 'Title';
         input.maxLength = 20;
@@ -32,6 +34,7 @@ const TaskListForm = (() => {
 
         const button = document.createElement('button');
         button.classList.add('task-list-button');
+        button.id = 'create-task-list-button';
         button.onclick = () => cancel(root, createTaskListFormButton, input);
 
         const xIcon =  document.createElement('i');

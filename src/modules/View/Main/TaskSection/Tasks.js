@@ -29,7 +29,8 @@ const Tasks = (() => {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.id = 'task-check-box';
+        checkbox.name = 'task-check-box';
+        checkbox.classList.add('task-check-box');
         checkbox.checked = task.isComplete;
         checkbox.onchange = (event) => markComplete(event);
 
