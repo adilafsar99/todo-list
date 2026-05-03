@@ -10,7 +10,7 @@ export default {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/todo.html',
+            template: './src/index.html',
             favicon: './src/assets/images/todo-list.png',
         }),
     ],

@@ -27,7 +27,7 @@
     border-color: var(--color-white);
 }
 
-.task-list-input {
+#general-task-list {
     text-align: center;
 }
 

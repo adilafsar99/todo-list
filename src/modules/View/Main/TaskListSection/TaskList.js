@@ -84,6 +84,7 @@ const TaskLists = (() => {
         deleteButton.appendChild(deleteIcon);
 
         if (taskList.title === 'General') {
+            input.id = 'general-task-list';
             inputRow.appendChild(input);
         } else {
             inputRow.append(input, editButton, deleteButton);
@@ -124,7 +125,7 @@ const TaskLists = (() => {
         if (activeId === id) {
             todo.setActiveItem();
         }
-        
+
         LocalStorage.saveToStorage('todo', todo);
         Subject.notify();
     };
