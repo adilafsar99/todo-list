@@ -126,6 +126,18 @@
     border-color: transparent;
 }
 
+.task-card[data-priority = 'low'] .task-checkbox {
+    accent-color: var(--color-green);
+}
+
+.task-card[data-priority = 'medium'] .task-checkbox {
+    accent-color: var(--color-yellow);
+}
+
+.task-card[data-priority = 'high'] .task-checkbox {
+    accent-color: var(--color-red);
+}
+
 .task-row {
     display: flex;
     justify-content: space-between;
