@@ -24,7 +24,8 @@ const TaskForm = (() => {
                 createTask(titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
             } else {
                 const taskId = form.dataset.taskId;
-                updateTask(taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput);
+                const taskListId = form.dataset.taskListId;
+                updateTask(taskListId, taskId, titleInput, priorityInput, deadlineInput, descriptionInput);
             }
         };
 
@@ -148,8 +149,9 @@ const TaskForm = (() => {
         }
     };
 
-    const setTaskId = (taskId) => {
+    const setIds = (taskListId, taskId) => {
         const taskForm = document.querySelector('.task-form');
+        taskForm.dataset.taskListId = taskListId;
         taskForm.dataset.taskId = taskId;
     };
 
@@ -160,7 +162,7 @@ const TaskForm = (() => {
             button] = getFields(taskForm);
         const taskListLabel = document.querySelector('#task-list-input').parentElement;
         
-        setTaskId('');
+        setIds('', '');
         taskListLabel.classList.remove('hidden');
         taskListInput.classList.remove('hidden');
         button.textContent = 'Create';
@@ -186,22 +188,21 @@ const TaskForm = (() => {
         Subject.notify(todo);
     };
 
-    const updateTask = (taskId, titleInput, priorityInput, deadlineInput, descriptionInput, taskListInput) => {
+    const updateTask = (taskListId, taskId, titleInput, priorityInput, deadlineInput, descriptionInput) => {
         toggleVisibility();
 
         const title = titleInput.value;
         const priority = priorityInput.value;
         const deadline = deadlineInput.value;
         const description = descriptionInput.value;
-        const taskListId = taskListInput.value;
 
-        const taskList = todo.getItem(taskListInput.value);
+        const taskList = todo.getItem(taskListId);
 
         taskList.updateItem(taskId, { title, priority, deadline, description, taskListId });
         LocalStorage.saveToStorage('todo', todo);
 
         resetForm();
-        Subject.notify(todo);
+        Subject.notify();
     };
 
     const getFields = (taskForm) => {
@@ -221,7 +222,8 @@ const TaskForm = (() => {
         priorityInput.value = task.priority;
         deadlineInput.value = task.deadline;
         descriptionInput.value = task.description;
-        const taskListLabel = document.querySelector('#task-list-input').previousElementSibling;
+
+        const taskListLabel = document.querySelector('#task-list-input').parentElement;
         taskListLabel.classList.add('hidden');
         taskListInput.classList.add('hidden');
 
@@ -239,7 +241,7 @@ const TaskForm = (() => {
         });
     };
 
-    return { create, update, fillFields, toggleVisibility, setTaskId };
+    return { create, update, fillFields, toggleVisibility, setIds };
 })();
 
 Subject.subscribe(TaskForm.update);

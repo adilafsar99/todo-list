@@ -122,23 +122,27 @@ const Tasks = (() => {
     };
 
     const editTask = (event) => {
+        const taskListId = event.target.closest('.task-card').dataset.taskListId;
         const taskId = event.target.closest('.task-card').dataset.taskId;
-        const task = todo.activeItem.getItem(taskId);
+        const taskList = todo.getItem(taskListId);
+        const task = taskList.getItem(taskId);
         TaskForm.fillFields(task);
-        TaskForm.setTaskId(taskId);
+        TaskForm.setIds(taskListId, taskId);
         TaskForm.toggleVisibility();
     };
 
     const deleteTask = (event) => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         todo.activeItem.removeItem(taskId);
-        LocalStorage.saveToStorage('todo', todo)
+        LocalStorage.saveToStorage('todo', todo);
         Subject.notify();
     };
 
     const markComplete = (event) => {
+        const taskListId = event.target.closest('.task-card').dataset.taskListId;
         const taskId = event.target.closest('.task-card').dataset.taskId;
-        const task = todo.activeItem.getItem(taskId);
+        const taskList = todo.getItem(taskListId);
+        const task = taskList.getItem(taskId);
         task.toggleIsComplete();
         LocalStorage.saveToStorage('todo', todo);
         Subject.notify();

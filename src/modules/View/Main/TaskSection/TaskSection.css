@@ -60,8 +60,18 @@
     background-color: var(--color-white);
 }
 
+#priority-input:focus {
+    outline: 1px solid var(--header-color);
+}
+
 #description-input {
     resize: none;
+    padding: 0.2em;
+}
+
+
+#description-input:focus {
+    outline: 1px solid var(--header-color);
 }
 
 #create-task-button {
