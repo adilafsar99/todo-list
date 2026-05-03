@@ -97,7 +97,7 @@ const FilterTabs = (() => {
             LocalStorage.saveToStorage('todo', todo);
         }
 
-        Subject.notify(todo);
+        Subject.notify();
     };
 
     return { create };

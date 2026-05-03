@@ -34,10 +34,10 @@ const TaskLists = (() => {
         input.onclick = (event) => {
             if (input.readOnly) {
                 const id = event.target.closest('.task-list').dataset.id;
-                if (todo.activeItem.id === id) {
+                if (todo.activeId === id) {
                     return;
                 }
-                todo.setActiveItem(id);
+                todo.setActiveId(id);
                 LocalStorage.saveToStorage('todo', todo);
                 Subject.notify(todo);
             }
@@ -103,28 +103,33 @@ const TaskLists = (() => {
     const updateTaskList = (event, input, editButton, editIcon, checkIcon) => {
         const taskListId = event.target.closest('.task-list').dataset.id;
         const state = { title: input.value };
+
         input.readOnly = true;
         editButton.innerHTML = editIcon.outerHTML;
         editButton.onclick = () => enableInput(input, editButton, editIcon, checkIcon);
+
         const taskList = todo.updateItem(taskListId, state);
+
         LocalStorage.saveToStorage('todo', todo);
-        console.log(todo.activeItem.title)
-        if (todo.activeItem.id === taskList.id) {
-            Subject.notify(todo);
+
+        if (todo.activeId === taskList.id) {
+            Subject.notify();
         }
     };
 
     const deleteTaskList = (id) => {
-        const activeItem = todo.activeItem;
-        const taskList = todo.removeItem(id);
-        if (activeItem === taskList) {
+        const activeId = todo.activeId;
+        todo.removeItem(id);
+
+        if (activeId === id) {
             todo.setActiveItem();
         }
+        
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify(todo);
+        Subject.notify();
     };
 
-    const update = (todo) => {
+    const update = () => {
         const root = document.querySelector('.task-lists-root');
         root.innerHTML = '';
 

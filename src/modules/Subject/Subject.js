@@ -7,10 +7,9 @@ const Subject = (() => {
 
     //const unsubscribe = (fn) => listeners = listeners.filter(listener => listener !== fn);
 
-    const notify = (todo) => {
-        console.log(todo.activeItem.title)
+    const notify = () => {
         listeners.forEach(listener => {
-            listener(todo);
+            listener();
         });
     };
 

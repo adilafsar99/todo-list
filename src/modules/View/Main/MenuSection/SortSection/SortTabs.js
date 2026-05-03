@@ -57,7 +57,7 @@ const SortTabs = (() => {
             }
 
             LocalStorage.saveToStorage('todo', todo);
-            Subject.notify(todo);
+            Subject.notify();
         }
     };
 
@@ -80,7 +80,7 @@ const SortTabs = (() => {
             LocalStorage.saveToStorage('todo', todo);
         }
 
-        Subject.notify(todo);
+        Subject.notify();
     };
 
     return { create };

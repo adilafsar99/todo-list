@@ -3,12 +3,11 @@ import recreateTodo from './RecreateTodo.js'
 import LocalStorage from './LocalStorage.js';
 
 const State = (() => {
-    console.log('I ran!')
-    const todoObj = '' //LocalStorage.getFromStorage('todo');
+    const todoObj = LocalStorage.getFromStorage('todo');
     const state = todoObj ? recreateTodo(todoObj) : createTodo({});
     if (!state.list.length) {
         state.createItem({ title: 'General' });
-        state.setActiveItem();
+        state.setActiveId();
         LocalStorage.saveToStorage('todo', state);
     }
 

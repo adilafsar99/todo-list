@@ -54,11 +54,15 @@ const TaskListForm = (() => {
     const createTaskList = (root, createTaskListFormButton, input, button, xIcon) => {
         root.classList.toggle('hidden');
         createTaskListFormButton.classList.toggle('hidden');
+
         const state = { title: input.value };
         const taskList = todo.createItem(state);
-        todo.setActiveItem(taskList.id);
+
+        todo.setActiveId(taskList.id);
+
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify(todo);
+        Subject.notify();
+
         input.value = '';
         button.innerHTML = xIcon.outerHTML;
         button.onclick = () => cancel(root, createTaskListFormButton, input);

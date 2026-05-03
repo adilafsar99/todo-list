@@ -7,8 +7,8 @@ const createTodoAndTaskListFields = ({ list = [] }) => ({
     list
 });
 
-const createTodoFields = ({ activeItem = null, sortConfig = {}, filterConfig = {} }) => ({
-    activeItem,
+const createTodoFields = ({ activeId = null, sortConfig = {}, filterConfig = {} }) => ({
+    activeId,
     sortConfig,
     filterConfig
 });
@@ -39,18 +39,7 @@ const createTodoAndTaskListMethods = () => {
         return deletedItem;
     };
 
-    const setActiveItem = function (id = '') {
-        if (!id) {
-            this.activeItem = this.list[0];
-        }
-        else {
-            const item = this.getItem(id);
-            this.activeItem = item;
-            return item;
-        }
-    };
-
-    return { getItem, updateItem, removeItem, setActiveItem };
+    return { getItem, updateItem, removeItem };
 };
 
 const createTaskListMethods = () => {
@@ -126,7 +115,22 @@ const createTodoMethods = () => {
         return taskList;
     };
 
-    return { createItem };
+    const setActiveId = function (id = '') {
+        if (!id) {
+            this.activeId = this.list[0].id;
+        }
+        else {
+            this.activeId = id;
+        }
+    };
+
+    const getActiveItem = function () {
+        const activeItem = this.getItem(this.activeId);
+        return activeItem;
+    };
+
+
+    return { createItem, setActiveId, getActiveItem };
 };
 
 const createTaskListObject = (state) => {

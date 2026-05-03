@@ -11,7 +11,7 @@ const Tasks = (() => {
         const root = document.createElement('div');
         root.classList.add('tasks-root');
 
-        appendTaskCards(todo, root);
+        appendTaskCards(root);
 
         return root;
     };
@@ -19,7 +19,7 @@ const Tasks = (() => {
     const createTaskCard = (task) => {
         const taskCard = document.createElement('button');
         taskCard.classList.add('task-card');
-        taskCard.dataset.taskListId = todo.activeItem.id;
+        taskCard.dataset.taskListId = todo.activeId;
         taskCard.dataset.taskId = task.id;
         taskCard.dataset.priority = task.priority;
         taskCard.onclick = (event) => openTaskCard(event);
@@ -54,7 +54,7 @@ const Tasks = (() => {
 
         const taskListTitle = document.createElement('p');
         taskListTitle.id = 'task-list-title';
-        taskListTitle.textContent = todo.activeItem.title;
+        taskListTitle.textContent = todo.getActiveItem().title;
 
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
@@ -121,15 +121,8 @@ const Tasks = (() => {
         }
     };
 
-    const update = (todo) => {
-        const root = document.querySelector('.tasks-root');
-        root.innerHTML = '';
-
-        appendTaskCards(todo, root);
-    };
-
-    const appendTaskCards = (todo, container) => {
-        let tasks = todo.activeItem.list;
+    const appendTaskCards = (container) => {
+        let tasks = todo.getActiveItem().list;
         tasks = handleFilter(tasks);
         tasks = handleSort(tasks);
         
@@ -150,10 +143,12 @@ const Tasks = (() => {
     };
 
     const deleteTask = (event) => {
+        const taskListId = event.target.closest('.task-card').dataset.taskListId;
         const taskId = event.target.closest('.task-card').dataset.taskId;
-        todo.activeItem.removeItem(taskId);
+        const taskList = todo.getItem(taskListId);
+        taskList.removeItem(taskId);
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify(todo);
+        Subject.notify();
     };
 
     const toggleComplete = (event) => {
@@ -162,7 +157,7 @@ const Tasks = (() => {
         const taskList = todo.getItem(taskListId);
         taskList.markItem(taskId);
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify(todo);
+        Subject.notify();
     };
 
     const handleFilter = (list) => {
@@ -171,7 +166,7 @@ const Tasks = (() => {
         for (let filter in filterConfig) {
             if (filterConfig[filter]) {
                 let appliedFilterConfig = { filterParam: filter, filterValue: filterConfig[filter] };
-                list = todo.activeItem.filterList(list, appliedFilterConfig);
+                list = todo.getActiveItem().filterList(list, appliedFilterConfig);
             }
         }
 
@@ -182,10 +177,17 @@ const Tasks = (() => {
         const sortConfig = todo.sortConfig;
 
         if (sortConfig.sortParam) {
-            list = todo.activeItem.sortList(list, sortConfig);
+            list = todo.getActiveItem().sortList(list, sortConfig);
         }
 
         return list;
+    };
+
+    const update = () => {
+        const root = document.querySelector('.tasks-root');
+        root.innerHTML = '';
+        
+        appendTaskCards(root);
     };
 
     return { create, update };

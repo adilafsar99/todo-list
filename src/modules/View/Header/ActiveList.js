@@ -8,8 +8,9 @@ const ActiveList = (() => {
 
         const activeList = document.createElement('p');
         activeList.id = 'active-list';
-
-        const activeListTitle = todo.activeItem.title;
+        
+        const activeItem = todo.getActiveItem();
+        const activeListTitle = activeItem.title;
 
         activeList.textContent = activeListTitle;
 
@@ -18,10 +19,11 @@ const ActiveList = (() => {
         return root;
     };
 
-    const update = (todo) => {
+    const update = () => {
         const activeList = document.querySelector('#active-list');
 
-        const activeListTitle = todo.activeItem.title;
+        const activeItem = todo.getActiveItem();
+        const activeListTitle = activeItem.title;
         
         activeList.textContent = activeListTitle;
     };
