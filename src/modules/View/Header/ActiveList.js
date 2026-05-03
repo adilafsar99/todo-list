@@ -18,7 +18,7 @@ const ActiveList = (() => {
         return root;
     };
 
-    const update = () => {
+    const update = (todo) => {
         const activeList = document.querySelector('#active-list');
 
         const activeListTitle = todo.activeItem.title;

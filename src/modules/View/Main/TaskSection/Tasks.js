@@ -1,17 +1,17 @@
 import { format } from 'date-fns';
 
 import todo from '../../../State/State.js';
+import LocalStorage from '../../../State/LocalStorage.js';
 import Subject from '../../../Subject/Subject.js';
 
 import TaskForm from './TaskForm.js';
-import LocalStorage from '../../../State/LocalStorage.js';
 
 const Tasks = (() => {
     const create = () => {
         const root = document.createElement('div');
         root.classList.add('tasks-root');
 
-        appendTaskCards(root);
+        appendTaskCards(todo, root);
 
         return root;
     };
@@ -29,10 +29,10 @@ const Tasks = (() => {
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.name = 'task-check-box';
-        checkbox.classList.add('task-check-box');
+        checkbox.name = 'task-checkbox';
+        checkbox.classList.add('task-checkbox');
         checkbox.checked = task.isComplete;
-        checkbox.onchange = (event) => markComplete(event);
+        checkbox.onchange = (event) => toggleComplete(event);
 
         const contentCol = document.createElement('div');
         contentCol.classList.add('content-col');
@@ -108,9 +108,9 @@ const Tasks = (() => {
             return;
         };
 
-        const target = event.target.closest('.task-card');
+        const targetCard = event.target.closest('.task-card');
         const taskCards = document.querySelectorAll('.task-card');
-        const targetOpenCardCol = target.children[1].lastChild;
+        const targetOpenCardCol = targetCard.children[1].lastChild;
         if (!targetOpenCardCol.classList.contains('hidden')) {
             targetOpenCardCol.classList.add('hidden');
         } else {
@@ -119,6 +119,24 @@ const Tasks = (() => {
             });
             targetOpenCardCol.classList.remove('hidden');
         }
+    };
+
+    const update = (todo) => {
+        const root = document.querySelector('.tasks-root');
+        root.innerHTML = '';
+
+        appendTaskCards(todo, root);
+    };
+
+    const appendTaskCards = (todo, container) => {
+        let tasks = todo.activeItem.list;
+        tasks = handleFilter(tasks);
+        tasks = handleSort(tasks);
+        
+        tasks.forEach(task => {
+            let taskCard = createTaskCard(task);
+            container.appendChild(taskCard);
+        })
     };
 
     const editTask = (event) => {
@@ -135,35 +153,16 @@ const Tasks = (() => {
         const taskId = event.target.closest('.task-card').dataset.taskId;
         todo.activeItem.removeItem(taskId);
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify();
+        Subject.notify(todo);
     };
 
-    const markComplete = (event) => {
+    const toggleComplete = (event) => {
         const taskListId = event.target.closest('.task-card').dataset.taskListId;
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const taskList = todo.getItem(taskListId);
-        const task = taskList.getItem(taskId);
-        task.toggleIsComplete();
+        taskList.markItem(taskId);
         LocalStorage.saveToStorage('todo', todo);
-        Subject.notify();
-    };
-
-    const update = () => {
-        const root = document.querySelector('.tasks-root');
-        root.innerHTML = '';
-
-        appendTaskCards(root);
-    };
-
-    const appendTaskCards = (container) => {
-        let tasks = todo.activeItem.list;
-        tasks = handleFilter(tasks);
-        tasks = handleSort(tasks);
-        
-        tasks.forEach(task => {
-            let taskCard = createTaskCard(task);
-            container.appendChild(taskCard);
-        })
+        Subject.notify(todo);
     };
 
     const handleFilter = (list) => {

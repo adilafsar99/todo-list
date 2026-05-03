@@ -108,19 +108,10 @@ const TaskLists = (() => {
         editButton.onclick = () => enableInput(input, editButton, editIcon, checkIcon);
         const taskList = todo.updateItem(taskListId, state);
         LocalStorage.saveToStorage('todo', todo);
+        console.log(todo.activeItem.title)
         if (todo.activeItem.id === taskList.id) {
             Subject.notify(todo);
         }
-    };
-
-    const update = () => {
-        const root = document.querySelector('.task-lists-root');
-        root.innerHTML = '';
-
-        todo.list.forEach(taskList => {
-            let taskListForm = createTaskList(taskList);
-            root.appendChild(taskListForm);
-        });
     };
 
     const deleteTaskList = (id) => {
@@ -131,6 +122,16 @@ const TaskLists = (() => {
         }
         LocalStorage.saveToStorage('todo', todo);
         Subject.notify(todo);
+    };
+
+    const update = (todo) => {
+        const root = document.querySelector('.task-lists-root');
+        root.innerHTML = '';
+
+        todo.list.forEach(taskList => {
+            let taskListForm = createTaskList(taskList);
+            root.appendChild(taskListForm);
+        });
     };
 
     return { create, update };

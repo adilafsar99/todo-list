@@ -198,11 +198,12 @@ const TaskForm = (() => {
 
         const taskList = todo.getItem(taskListId);
 
-        taskList.updateItem(taskId, { title, priority, deadline, description, taskListId });
-        LocalStorage.saveToStorage('todo', todo);
+        taskList.updateItem(taskId, { title, priority, deadline, description });
 
+        LocalStorage.saveToStorage('todo', todo);
+        
         resetForm();
-        Subject.notify();
+        Subject.notify(todo);
     };
 
     const getFields = (taskForm) => {
@@ -230,7 +231,7 @@ const TaskForm = (() => {
         button.textContent = 'Update';
     };
 
-    const update = () => {
+    const update = (todo) => {
         const taskListInput = document.querySelector('#task-list-input');
         taskListInput.innerHTML = '';
         todo.list.forEach(taskList => {

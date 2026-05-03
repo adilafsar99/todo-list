@@ -20,7 +20,6 @@ const createTodoAndTaskListMethods = () => {
 
     const updateItem = function (id, state) {
         const item = this.getItem(id);
-        console.log(this)
         for (let key in state) {
             if (state[key] !== undefined) {
                 item[key] = state[key];
@@ -63,7 +62,8 @@ const createTaskListMethods = () => {
 
     const markItem = function (id) {
         const task = this.getItem(id);
-        task.isComplete = true;
+        task.toggleIsComplete();
+        return task;
     };
 
     const getPriorityValue = (priority) => {
