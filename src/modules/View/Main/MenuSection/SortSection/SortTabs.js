@@ -45,18 +45,18 @@ const SortTabs = (() => {
     const changeSortOrder = (event, upIcon, downIcon) => {
         const sortOrderButton = event.target.closest('#sort-order-button');
         const selectedTab = sortOrderButton.closest('.sort-tab');
-        
-        if (sortOrderButton.firstElementChild.classList.contains('fa-arrow-up')) {
-            sortOrderButton.innerHTML = downIcon.outerHTML;
-            todo.sortConfig.sortOrder = 'descending';
-            LocalStorage.saveToStorage('todo', todo);
-        } else {
-            sortOrderButton.innerHTML = upIcon.outerHTML;
-            todo.sortConfig.sortOrder = 'ascending';
-            LocalStorage.saveToStorage('todo', todo);
-        }
-        
+
         if (selectedTab.classList.contains('selected')) {
+            if (sortOrderButton.firstElementChild.classList.contains('fa-arrow-up')) {
+                sortOrderButton.innerHTML = downIcon.outerHTML;
+                todo.sortConfig.sortOrder = 'descending';
+
+            } else {
+                sortOrderButton.innerHTML = upIcon.outerHTML;
+                todo.sortConfig.sortOrder = 'ascending';
+            }
+
+            LocalStorage.saveToStorage('todo', todo);
             Subject.notify();
         }
     };
@@ -65,7 +65,7 @@ const SortTabs = (() => {
         if (event.target.tagName === 'svg' || event.target.tagName === 'path') {
             return;
         }
-        
+
         const tabs = Array.from(document.querySelectorAll('.sort-tab'));
         const selectedTab = event.target.closest('.sort-tab');
 
