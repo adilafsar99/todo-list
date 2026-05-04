@@ -31,6 +31,10 @@
     background-color: var(--hover-color);
 }
 
+#select-all-task-lists-button.selected {
+    background-color: var(--header-color);
+}
+
 .task-list-input-row {
     height: max-content;
     display: flex;

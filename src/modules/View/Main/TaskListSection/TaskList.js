@@ -21,15 +21,30 @@ const TaskLists = (() => {
 
     const createShowAllTaskListsButton = () => {
         const button = document.createElement('button');
+        if (!todo.getActiveItem()) {
+            button.classList.add('selected');
+        }
         button.id = 'select-all-task-lists-button';
         button.textContent = 'Select All';
-        button.onclick = () => {
-            todo.setActiveId('all');
-            Subject.notify();
-        };
+        button.onclick = (event) => toggleShowAllTaskLists(event);
 
         return button;
     };
+
+    const toggleShowAllTaskLists = (event) => {
+        const button = event.target;
+
+        if (button.classList.contains('selected')) {
+            button.classList.remove('selected');
+            todo.setActiveId();
+        } else {
+            button.classList.add('selected');
+            todo.setActiveId('all');
+        }
+        
+        LocalStorage.saveToStorage('todo', todo);
+        Subject.notify();
+    }
 
     const createTaskList = (taskList) => {
         const form = document.createElement('button');
@@ -38,7 +53,7 @@ const TaskLists = (() => {
 
         const inputRow = document.createElement('div');
         inputRow.classList.add('task-list-input-row');
-        
+
         const input = document.createElement('input');
         input.classList.add('task-list-input');
         input.name = 'title-input';
