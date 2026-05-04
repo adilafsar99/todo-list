@@ -19,7 +19,7 @@ const Tasks = (() => {
     const createTaskCard = (task) => {
         const taskCard = document.createElement('button');
         taskCard.classList.add('task-card');
-        taskCard.dataset.taskListId = todo.activeId;
+        taskCard.dataset.taskListId = todo.getActiveItem() ? todo.activeId : task.taskListId;;
         taskCard.dataset.taskId = task.id;
         taskCard.dataset.priority = task.priority;
         taskCard.onclick = (event) => openTaskCard(event);
@@ -54,7 +54,7 @@ const Tasks = (() => {
 
         const taskListTitle = document.createElement('p');
         taskListTitle.id = 'task-list-title';
-        taskListTitle.textContent = todo.getActiveItem().title;
+        taskListTitle.textContent = todo.getActiveItem() ? todo.getActiveItem().title : task.taskListTitle;
 
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
@@ -122,10 +122,21 @@ const Tasks = (() => {
     };
 
     const appendTaskCards = (container) => {
-        let tasks = todo.getActiveItem().list;
+        let tasks;
+        if (todo.activeId === 'all') {
+            tasks = [];
+            todo.list.forEach(taskList => taskList.list.forEach(task => {
+                task['taskListId'] = taskList.id;
+                task['taskListTitle'] = taskList.title;
+                tasks.push(task);
+            }));
+        } else {
+            tasks = todo.getActiveItem().list;
+        }
+
         tasks = handleFilter(tasks);
         tasks = handleSort(tasks);
-        
+
         tasks.forEach(task => {
             let taskCard = createTaskCard(task);
             container.appendChild(taskCard);
@@ -166,7 +177,7 @@ const Tasks = (() => {
         for (let filter in filterConfig) {
             if (filterConfig[filter]) {
                 let appliedFilterConfig = { filterParam: filter, filterValue: filterConfig[filter] };
-                list = todo.getActiveItem().filterList(list, appliedFilterConfig);
+                list = todo.filterList(list, appliedFilterConfig);
             }
         }
 
@@ -177,7 +188,7 @@ const Tasks = (() => {
         const sortConfig = todo.sortConfig;
 
         if (sortConfig.sortParam) {
-            list = todo.getActiveItem().sortList(list, sortConfig);
+            list = todo.sortList(list, sortConfig);
         }
 
         return list;
@@ -186,7 +197,7 @@ const Tasks = (() => {
     const update = () => {
         const root = document.querySelector('.tasks-root');
         root.innerHTML = '';
-        
+
         appendTaskCards(root);
     };
 

@@ -7,12 +7,28 @@ const TaskLists = (() => {
         const root = document.createElement('div');
         root.classList.add('task-lists-root');
 
+        const button = createShowAllTaskListsButton();
+
+        root.appendChild(button);
+
         todo.list.forEach(taskList => {
             let taskListForm = createTaskList(taskList);
             root.appendChild(taskListForm);
         });
 
         return root;
+    };
+
+    const createShowAllTaskListsButton = () => {
+        const button = document.createElement('button');
+        button.id = 'select-all-task-lists-button';
+        button.textContent = 'Select All';
+        button.onclick = () => {
+            todo.setActiveId('all');
+            Subject.notify();
+        };
+
+        return button;
     };
 
     const createTaskList = (taskList) => {
@@ -123,7 +139,7 @@ const TaskLists = (() => {
         todo.removeItem(id);
 
         if (activeId === id) {
-            todo.setActiveItem();
+            todo.setActiveId();
         }
 
         LocalStorage.saveToStorage('todo', todo);
@@ -133,6 +149,10 @@ const TaskLists = (() => {
     const update = () => {
         const root = document.querySelector('.task-lists-root');
         root.innerHTML = '';
+
+        const button = createShowAllTaskListsButton();
+
+        root.appendChild(button);
 
         todo.list.forEach(taskList => {
             let taskListForm = createTaskList(taskList);

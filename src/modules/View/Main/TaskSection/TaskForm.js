@@ -181,7 +181,11 @@ const TaskForm = (() => {
         const taskList = todo.getItem(taskListInput.value);
 
         taskList.createItem({ title, priority, deadline, description, taskList });
-        todo.setActiveId(taskListInput.value);
+
+        if (todo.getActiveItem()) {
+            todo.setActiveId(taskListInput.value);
+        }
+
         LocalStorage.saveToStorage('todo', todo);
 
         resetForm();

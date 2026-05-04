@@ -10,7 +10,7 @@ const ActiveList = (() => {
         activeList.id = 'active-list';
         
         const activeItem = todo.getActiveItem();
-        const activeListTitle = activeItem.title;
+        const activeListTitle = activeItem ? activeItem.title : 'All Tasks';
 
         activeList.textContent = activeListTitle;
 
@@ -23,7 +23,7 @@ const ActiveList = (() => {
         const activeList = document.querySelector('#active-list');
 
         const activeItem = todo.getActiveItem();
-        const activeListTitle = activeItem.title;
+        const activeListTitle = activeItem ? activeItem.title : 'All Tasks';
         
         activeList.textContent = activeListTitle;
     };

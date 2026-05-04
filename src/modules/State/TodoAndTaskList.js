@@ -55,6 +55,30 @@ const createTaskListMethods = () => {
         return task;
     };
 
+    return { createItem, markItem };
+};
+
+const createTodoMethods = () => {
+    const createItem = function (state) {
+        const taskList = createTaskList(state);
+        this.list.push(taskList);
+        return taskList;
+    };
+
+    const setActiveId = function (id = '') {
+        if (!id) {
+            this.activeId = this.list[0].id;
+        }
+        else {
+            this.activeId = id;
+        }
+    };
+
+    const getActiveItem = function () {
+        const activeItem = this.getItem(this.activeId);
+        return activeItem;
+    };
+
     const getPriorityValue = (priority) => {
         switch (priority) {
             case 'high':
@@ -105,32 +129,8 @@ const createTaskListMethods = () => {
             }
         })
     };
-    return { createItem, markItem, sortList, filterList };
-};
 
-const createTodoMethods = () => {
-    const createItem = function (state) {
-        const taskList = createTaskList(state);
-        this.list.push(taskList);
-        return taskList;
-    };
-
-    const setActiveId = function (id = '') {
-        if (!id) {
-            this.activeId = this.list[0].id;
-        }
-        else {
-            this.activeId = id;
-        }
-    };
-
-    const getActiveItem = function () {
-        const activeItem = this.getItem(this.activeId);
-        return activeItem;
-    };
-
-
-    return { createItem, setActiveId, getActiveItem };
+    return { createItem, setActiveId, getActiveItem, sortList, filterList };
 };
 
 const createTaskListObject = (state) => {
