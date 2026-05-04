@@ -148,8 +148,16 @@
     font-size: 1.5em;
 }
 
+.complete {
+    text-decoration: line-through dashed;
+}
+
 #task-deadline {
     align-self: self-end;
+}
+
+.overdue {
+    text-decoration: line-through wavy var(--color-red);
 }
 
 #task-description {

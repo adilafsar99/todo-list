@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isAfter } from 'date-fns';
 
 import todo from '../../../State/State.js';
 import LocalStorage from '../../../State/LocalStorage.js';
@@ -59,10 +59,18 @@ const Tasks = (() => {
         const taskTitle = document.createElement('p');
         taskTitle.id = 'task-title';
         taskTitle.textContent = task.title;
+        if (task.isComplete) {
+            taskTitle.classList.add('complete');
+        }
 
         const taskDeadline = document.createElement('p');
         taskDeadline.id = 'task-deadline';
         taskDeadline.textContent = format(task.deadline, 'dd-MMM-yyyy');
+        const currentDate = new Date();
+        const deadline = new Date(task.deadline);
+        if (isAfter(currentDate, deadline)) {
+            taskDeadline.classList.add('overdue');
+        }
 
         const taskDescription = document.createElement('p');
         taskDescription.id = 'task-description';
@@ -166,6 +174,7 @@ const Tasks = (() => {
         const taskListId = event.target.closest('.task-card').dataset.taskListId;
         const taskId = event.target.closest('.task-card').dataset.taskId;
         const taskList = todo.getItem(taskListId);
+
         taskList.markItem(taskId);
         LocalStorage.saveToStorage('todo', todo);
         Subject.notify();
