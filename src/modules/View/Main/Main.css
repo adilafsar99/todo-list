@@ -37,6 +37,30 @@
     border-color: var(--color-white);
 }
 
+.scrollable {
+    height: 78vh;
+    overflow-y: scroll;
+    padding-right: 0.5em;
+}
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+/* Track/Background */
+::-webkit-scrollbar-track {
+    background: var(--header-color);
+}
+/* Handle/Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-white);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--task-lists-color);
+}
+
 .date-input {
     text-align: center;
     color: inherit;

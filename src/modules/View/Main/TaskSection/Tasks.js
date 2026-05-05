@@ -9,7 +9,7 @@ import TaskForm from './TaskForm.js';
 const Tasks = (() => {
     const create = () => {
         const root = document.createElement('div');
-        root.classList.add('tasks-root');
+        root.classList.add('tasks-root', 'scrollable');
 
         appendTaskCards(root);
 

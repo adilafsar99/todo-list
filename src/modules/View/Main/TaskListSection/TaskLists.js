@@ -1,11 +1,11 @@
-import todo from './../../../State/State.js';
+import todo from '../../../State/State.js';
 import Subject from '../../../Subject/Subject.js';
 import LocalStorage from '../../../State/LocalStorage.js';
 
 const TaskLists = (() => {
     const create = () => {
         const root = document.createElement('div');
-        root.classList.add('task-lists-root');
+        root.classList.add('task-lists-root', 'scrollable');
 
         const button = createShowAllTaskListsButton();
 

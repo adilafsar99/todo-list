@@ -2,7 +2,7 @@ import './TaskListSection.css';
 
 import Heading from './Heading.js';
 import CreateTaskListForm from './CreateTaskListForm.js';
-import TaskList from './TaskList.js';
+import TaskLists from './TaskLists.js';
 
 const TaskListSection = (() => {
     const create = () => {
@@ -11,7 +11,7 @@ const TaskListSection = (() => {
 
         const heading = Heading.create();
         const createTaskListForm = CreateTaskListForm.create();
-        const taskLists = TaskList.create();
+        const taskLists = TaskLists.create();
 
         root.append(heading, createTaskListForm, taskLists);
 
