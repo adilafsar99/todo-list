@@ -157,11 +157,11 @@ const TaskForm = (() => {
 
     const resetForm = () => {
         const taskForm = document.querySelector('.task-form');
-        const [,,,,
+        const [, , , ,
             taskListInput,
             button] = getFields(taskForm);
         const taskListLabel = document.querySelector('#task-list-input').parentElement;
-        
+
         setIds('', '');
         taskListLabel.classList.remove('hidden');
         taskListInput.classList.remove('hidden');
@@ -205,7 +205,7 @@ const TaskForm = (() => {
         taskList.updateItem(taskId, { title, priority, deadline, description });
 
         LocalStorage.saveToStorage('todo', todo);
-        
+
         resetForm();
         Subject.notify();
     };
@@ -242,6 +242,9 @@ const TaskForm = (() => {
             const taskListOption = document.createElement('option');
             taskListOption.textContent = taskList.title;
             taskListOption.value = taskList.id;
+            if (todo.activeId === taskList.id) {
+                taskListOption.defaultSelected = true;
+            }
             taskListInput.appendChild(taskListOption);
         });
     };
